@@ -368,71 +368,6 @@ environment:
   - SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
 ```
 
-### Рекомендации для Production
-
-1. **Используйте сильные пароли** (минимум 16 символов)
-2. **Включите SSL** для PostgreSQL
-3. **Ограничьте доступ** к портам в firewall
-4. **Используйте secrets** (Docker Secrets или Kubernetes)
-5. **Настройте CORS** для безопасности API
-
-## 📚 API Примеры
-
-### Task Service
-
-#### Получить все задачи
-```bash
-curl -X GET http://localhost:8080/api/tasks
-```
-
-#### Создать задачу
-```bash
-curl -X POST http://localhost:8080/api/tasks \
-  -H "Content-Type: application/json" \
-  -d '{
-    "title": "Новая задача",
-    "description": "Описание",
-    "status": "TODO",
-    "priority": "HIGH"
-  }'
-```
-
-#### Получить задачу по ID
-```bash
-curl -X GET http://localhost:8080/api/tasks/1
-```
-
-#### Обновить задачу
-```bash
-curl -X PUT http://localhost:8080/api/tasks/1 \
-  -H "Content-Type: application/json" \
-  -d '{
-    "status": "IN_PROGRESS"
-  }'
-```
-
-#### Удалить задачу
-```bash
-curl -X DELETE http://localhost:8080/api/tasks/1
-```
-
-### User Service
-
-#### Получить всех пользователей
-```bash
-curl -X GET http://localhost:8081/api/users
-```
-
-#### Создать пользователя
-```bash
-curl -X POST http://localhost:8081/api/users \
-  -H "Content-Type: application/json" \
-  -d '{
-    "firstName": "Иван",
-    "lastName": "Петров",
-    "email": "ivan@example.com"
-  }'
-```
 
 ## 🤝 Разработка
 
@@ -476,19 +411,6 @@ curl -X GET http://localhost:8081/actuator/health
 
 (Требует наличия Spring Boot Actuator в зависимостях)
 
-## 🧪 Тестирование
-
-### Запуск тестов
-
-```bash
-# Task Service
-docker-compose exec task-service mvn test
-
-# User Service
-docker-compose exec user-service mvn test
-```
-
-## 📦 Деплойment
 
 ### Собрать JAR файлы
 
@@ -551,9 +473,6 @@ jobs:
         run: cd user-service && mvn clean package
 ```
 
-## 📄 Лицензия
-
-Проект лицензирован под MIT License. Смотрите файл `LICENSE` для деталей.
 
 ## 👤 Автор
 
