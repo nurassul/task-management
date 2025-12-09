@@ -1,4 +1,4 @@
-package com.project.userservice.exceptions;
+package com.project.taskservice.exceptions;
 
 
 import jakarta.persistence.EntityNotFoundException;
@@ -8,14 +8,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
-import javax.naming.AuthenticationException;
 import java.time.LocalDateTime;
 
-@Slf4j
 @ControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler {
+
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponseDTO> handleGenericException(
@@ -72,10 +71,7 @@ public class GlobalExceptionHandler {
                 .body(errorResponseDTO);
     }
 
-    @ExceptionHandler(AuthenticationException.class)
-    @ResponseStatus(HttpStatus.FORBIDDEN)
-    public ResponseEntity<String> handleException(AuthenticationException ex) {
-        return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                .body("Authentication failed " + ex.getMessage());
-    }
+
+
+
 }

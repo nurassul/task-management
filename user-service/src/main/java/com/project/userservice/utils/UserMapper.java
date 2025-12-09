@@ -1,29 +1,15 @@
 package com.project.userservice.utils;
 
 
-import com.project.userservice.entity.User;
+import com.project.userservice.dto.User;
 import com.project.userservice.entity.UserEntity;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
+import org.mapstruct.MappingConstants;
+import org.mapstruct.ReportingPolicy;
 
-@Component
-public class UserMapper {
-    public User toDomainEntity(UserEntity entity) {
-        return new User(
-                entity.getId(),
-                entity.getUsername(),
-                entity.getEmail(),
-                entity.getRegistrationDate(),
-                entity.getUserStatus()
-        );
-    }
-
-    public UserEntity toEntity(User user) {
-        return new UserEntity(
-                user.id(),
-                user.username(),
-                user.email(),
-                user.registrationDate(),
-                user.userStatus()
-        );
-    }
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING,
+        unmappedTargetPolicy = ReportingPolicy.IGNORE)
+public interface UserMapper {
+    User toDomainEntity(UserEntity entity);
+    UserEntity toEntity(User user);
 }

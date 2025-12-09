@@ -30,7 +30,7 @@ services:
   task-api:
     build: ./task-service
     ports:
-      - "8080:8080"
+      - "8082:8080"
     depends_on:
       - db
     networks:
@@ -39,6 +39,7 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/task-db
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
+
 volumes:
   db_data:
 

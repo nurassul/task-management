@@ -1,12 +1,12 @@
 package com.project.userservice.controller;
 
 
-import com.project.userservice.entity.User;
-import com.project.userservice.repository.UserRepository;
-import com.project.userservice.service.UserService;
+import com.project.userservice.dto.User;
+import com.project.userservice.service.impl.UserServiceImpl;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +20,7 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
 
-    private final UserService userService;
+    private final UserServiceImpl userService;
 
 
     @GetMapping("/{id}")
@@ -28,6 +28,17 @@ public class UserController {
             @PathVariable("id") Long id
     ) {
         log.info("Called findUserById(): id={}", id);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(userService.findUserById(id));
+    }
+
+    @GetMapping("/private/{id}")
+    public ResponseEntity<User> getUserByIdPrivate(
+            @PathVariable("id") Long id
+    ) {
+        log.info("Called findUserByIdPrivate(): id={}", id);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -44,7 +55,7 @@ public class UserController {
                 .body(userService.findAllUsers());
     }
 
-    @PostMapping()
+    @PostMapping("/registration")
     public ResponseEntity<User> createUser(
             @RequestBody @Valid User userToCreate
     ) {
@@ -79,6 +90,11 @@ public class UserController {
                 .status(HttpStatus.OK).build();
     }
 
+    @GetMapping("/email/{email}")
+    public User getUserByEmail(@PathVariable String email) throws ChangeSetPersister.NotFoundException {
+        return userService.getUserByEmail(email);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<User> updateUser(
             @PathVariable("id") Long id,
@@ -92,5 +108,6 @@ public class UserController {
                 .status(HttpStatus.OK)
                 .body(updatedUser);
     }
+
 
 }

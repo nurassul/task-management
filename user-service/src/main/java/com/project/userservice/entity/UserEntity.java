@@ -1,6 +1,7 @@
 package com.project.userservice.entity;
 
 
+import com.project.userservice.dto.UserStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,6 +33,9 @@ public class UserEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private UserStatus userStatus;
+
+    @Column(name = "password")
+    private String password;
 
     @PrePersist
     public void prePersist() {
