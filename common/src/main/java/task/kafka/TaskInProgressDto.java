@@ -1,6 +1,6 @@
-package com.project.taskservice.kafka;
+package task.kafka;
 
-public record TaskCompletedDto(
+public record TaskInProgressDto(
         Long taskId,
         Long creatorId,
         Long assignedUserId
