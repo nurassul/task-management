@@ -1,18 +1,18 @@
 package com.project.taskservice.utils;
 
 
-import com.project.taskservice.model.Task;
-import com.project.taskservice.repository.TaskEntity;
+import com.project.taskservice.api.model.TaskDto;
+import com.project.taskservice.repository.entity.TaskEntity;
 import org.springframework.stereotype.Component;
 
 @Component
 public class TaskMapper {
 
-    public Task toDomainTask(
+    public TaskDto toDomainTask(
             TaskEntity taskEntity
     ) {
 
-        return new Task(
+        return new TaskDto(
                 taskEntity.getId(),
                 taskEntity.getCreatorId(),
                 taskEntity.getAssignedUserId(),
@@ -25,17 +25,17 @@ public class TaskMapper {
     }
 
     public TaskEntity toEntity(
-            Task task
+            TaskDto taskDto
     ) {
         return new TaskEntity(
-                task.id(),
-                task.creatorId(),
-                task.assignedUserId(),
-                task.taskStatus(),
-                task.createDateTime(),
-                task.deadlineDate(),
-                task.priority(),
-                task.doneDateTime()
+                taskDto.id(),
+                taskDto.creatorId(),
+                taskDto.assignedUserId(),
+                taskDto.taskStatus(),
+                taskDto.createDateTime(),
+                taskDto.deadlineDate(),
+                taskDto.priority(),
+                taskDto.doneDateTime()
         );
     }
 

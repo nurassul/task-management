@@ -6,7 +6,7 @@ A robust microservices-based system for managing tasks and users, built with **S
 
 The Task Management System allows you to manage users and tasks efficiently. It is designed as a distributed system where responsibilities are decoupled into separate microservices:
 
-- **Task Service**: Manages task lifecycles (create, read, update, delete, start, complete) with business logic.
+- **Task Service**: Manages taskDto lifecycles (create, read, update, delete, start, complete) with business logic.
 - **User Service**: Handles user registration, authentication (JWT), profile management, and user banning.
 - **Communication**: Services talk to each other using **Spring's RestClient** for synchronous REST calls.
 - **Database**: A shared **PostgreSQL** instance stores all data.
@@ -28,8 +28,8 @@ The Task Management System allows you to manage users and tasks efficiently. It 
 ## 📁 Project Structure
 
 ```
-task-management/
-├── task-service/               # Task management microservice
+taskDto-management/
+├── taskDto-service/               # Task management microservice
 │   ├── src/main/java/com/project/taskservice/
 │   │   ├── config/
 │   │   │   └── AppConfig.java              # RestClient bean configuration
@@ -75,8 +75,8 @@ Ensure you have the following installed:
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/nurassul/task-management.git
-   cd task-management
+   git clone https://github.com/nurassul/taskDto-management.git
+   cd taskDto-management
    ```
 
 2. **Build and start services:**
@@ -93,7 +93,7 @@ Ensure you have the following installed:
    ```bash
    docker-compose ps
    ```
-   You should see `task-service`, `user-service`, and `postgres` running.
+   You should see `taskDto-service`, `user-service`, and `postgres` running.
 
 ## 🌐 API Endpoints
 
@@ -106,12 +106,12 @@ Base URL: `http://localhost:8082/tasks`
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | `GET` | `/tasks` | Get all tasks |
-| `GET` | `/tasks/{id}` | Get task by ID |
-| `POST` | `/tasks` | Create new task |
-| `PUT` | `/tasks/{id}` | Update task |
-| `DELETE` | `/tasks/{id}` | Delete task |
-| `POST` | `/tasks/{id}/start` | Mark task as IN_PROGRESS |
-| `POST` | `/tasks/{id}/complete` | Mark task as DONE |
+| `GET` | `/tasks/{id}` | Get taskDto by ID |
+| `POST` | `/tasks` | Create new taskDto |
+| `PUT` | `/tasks/{id}` | Update taskDto |
+| `DELETE` | `/tasks/{id}` | Delete taskDto |
+| `POST` | `/tasks/{id}/start` | Mark taskDto as IN_PROGRESS |
+| `POST` | `/tasks/{id}/complete` | Mark taskDto as DONE |
 
 ### User Service (`:8081`)
 
@@ -132,7 +132,7 @@ Base URL: `http://localhost:8081/users`
 |--------|----------|-------------|
 | `GET` | `/users` | Get all users |
 | `GET` | `/users/{id}` | Get user by ID (public) |
-| `GET` | `/users/private/{id}` | Get user by ID (private for task-service) |
+| `GET` | `/users/private/{id}` | Get user by ID (private for taskDto-service) |
 | `GET` | `/users/email/{email}` | Get user by email |
 | `POST` | `/users/registration` | Register new user |
 | `PUT` | `/users/{id}` | Update user |
@@ -143,7 +143,7 @@ Base URL: `http://localhost:8081/users`
 
 ### RestClient Configuration
 
-The `AppConfig` class in `task-service` defines a `RestClient` bean:
+The `AppConfig` class in `taskDto-service` defines a `RestClient` bean:
 
 ```java
 @Configuration

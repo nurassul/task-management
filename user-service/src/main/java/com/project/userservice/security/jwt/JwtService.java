@@ -1,7 +1,7 @@
 package com.project.userservice.security.jwt;
 
 
-import com.project.userservice.dto.JwtAuthenticationDto;
+import com.project.userservice.security.dto.JwtAuthenticationDto;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;

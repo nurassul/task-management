@@ -5,9 +5,9 @@ metadata:
   name: postgres-service
 spec:
   selector:
-    app: postgres # <-- Эта "вывеска" ведет к Подам с меткой app: postgres
+    app: postgres
   ports:
     - protocol: TCP
       port: 5432
       targetPort: 5432
-  type: ClusterIP # <-- Доступен только внутри кластера
+  type: ClusterIP

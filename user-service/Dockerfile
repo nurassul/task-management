@@ -1,11 +1,24 @@
-FROM maven:3.9-eclipse-temurin-17 as builder
+FROM maven:3.9.6-eclipse-temurin-21 AS builder
 WORKDIR /app
-COPY pom.xml .
-RUN mvn dependency:go-offline -B
-COPY src ./src
-RUN mvn clean package -DskipTests -B
 
-FROM eclipse-temurin:17-jre-alpine
+COPY pom.xml .
+COPY common/pom.xml common/
+COPY user-service/pom.xml user-service/
+COPY task-service/pom.xml task-service/
+
+RUN mvn dependency:go-offline -B
+
+COPY common/src ./common/src
+COPY user-service/src ./user-service/src
+COPY task-service/src ./task-service/src
+
+RUN mvn clean package -pl :user-service -am -DskipTests -B
+
+
+FROM eclipse-temurin:21-jre
 WORKDIR /app
-COPY --from=builder /app/target/*.jar app.jar
+
+COPY --from=builder /app/user-service/target/user-service-0.0.1-SNAPSHOT.jar app.jar
+
+EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"]

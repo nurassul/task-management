@@ -1,7 +1,7 @@
 package com.project.userservice.security;
 
 
-import com.project.userservice.entity.UserEntity;
+import com.project.userservice.repository.entity.UserEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
