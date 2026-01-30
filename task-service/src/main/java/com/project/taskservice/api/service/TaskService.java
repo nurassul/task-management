@@ -1,8 +1,9 @@
 package com.project.taskservice.api.service;
 
 
-import com.project.taskservice.api.model.TaskDto;
-import com.project.taskservice.api.model.TaskStatus;
+import task.kafka.TaskStatusChangedEvent;
+import task.model.TaskDto;
+import task.model.TaskStatus;
 import com.project.taskservice.repository.entity.TaskEntity;
 import com.project.taskservice.repository.TaskRepository;
 import com.project.taskservice.utils.TaskMapper;
@@ -13,8 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClient;
-import task.kafka.TaskCompletedDto;
-import task.kafka.TaskInProgressDto;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -27,8 +26,7 @@ import java.util.Objects;
 @Service
 public class TaskService {
 
-    private final KafkaTemplate<Long, TaskCompletedDto> kafkaTemplateTaskCompleted;
-    private final KafkaTemplate<Long, TaskInProgressDto> kafkaTemplateTaskInProgress;
+    private final KafkaTemplate<Long, TaskStatusChangedEvent> kafkaTemplate;
 
     private final TaskRepository taskRepository;
     private final TaskMapper taskMapper;
@@ -142,8 +140,16 @@ public class TaskService {
         task.setTaskStatus(TaskStatus.IN_PROGRESS);
         var savedTask = taskRepository.save(task);
 
-        var event = new TaskInProgressDto(savedTask.getId(), savedTask.getCreatorId(), savedTask.getAssignedUserId());
-        kafkaTemplateTaskInProgress.send("task-events", id, event);
+
+        var event = new TaskStatusChangedEvent(
+                savedTask.getId(),
+                savedTask.getCreatorId(),
+                savedTask.getAssignedUserId(),
+                task.getTaskStatus(),
+                savedTask.getTaskStatus(),
+                LocalDateTime.now()
+        );
+        kafkaTemplate.send("task-events", id, event);
 
         return taskMapper.toDomainTask(savedTask);
     }
@@ -164,8 +170,15 @@ public class TaskService {
 
         var savedTask = taskRepository.save(task);
 
-        var event = new TaskCompletedDto(savedTask.getId(), savedTask.getCreatorId(), savedTask.getAssignedUserId());
-        kafkaTemplateTaskCompleted.send("task-events", id, event);
+        var event = new TaskStatusChangedEvent(
+                savedTask.getId(),
+                savedTask.getCreatorId(),
+                savedTask.getAssignedUserId(),
+                task.getTaskStatus(),
+                savedTask.getTaskStatus(),
+                LocalDateTime.now()
+        );
+        kafkaTemplate.send("task-events", id, event);
 
         return taskMapper.toDomainTask(savedTask);
     }

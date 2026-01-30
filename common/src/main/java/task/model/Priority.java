@@ -1,4 +1,4 @@
-package com.project.taskservice.api.model;
+package task.model;
 
 public enum Priority {
     LOW,

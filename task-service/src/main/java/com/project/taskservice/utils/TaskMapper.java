@@ -1,7 +1,7 @@
 package com.project.taskservice.utils;
 
 
-import com.project.taskservice.api.model.TaskDto;
+import task.model.TaskDto;
 import com.project.taskservice.repository.entity.TaskEntity;
 import org.springframework.stereotype.Component;
 

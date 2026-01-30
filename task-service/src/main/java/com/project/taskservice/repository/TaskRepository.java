@@ -1,7 +1,7 @@
 package com.project.taskservice.repository;
 
 
-import com.project.taskservice.api.model.TaskStatus;
+import task.model.TaskStatus;
 import com.project.taskservice.repository.entity.TaskEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
