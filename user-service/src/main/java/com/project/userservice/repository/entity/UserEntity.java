@@ -1,7 +1,7 @@
 package com.project.userservice.repository.entity;
 
 
-import com.project.userservice.api.dto.UserStatus;
+import user.model.UserStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

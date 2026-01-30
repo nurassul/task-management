@@ -1,7 +1,7 @@
 package com.project.userservice.utils;
 
 
-import com.project.userservice.api.dto.User;
+import user.model.User;
 import com.project.userservice.repository.entity.UserEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;

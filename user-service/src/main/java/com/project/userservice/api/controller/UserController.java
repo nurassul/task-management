@@ -1,7 +1,7 @@
 package com.project.userservice.api.controller;
 
 
-import com.project.userservice.api.dto.User;
+import user.model.User;
 import com.project.userservice.api.service.impl.UserServiceImpl;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;

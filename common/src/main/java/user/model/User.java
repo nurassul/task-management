@@ -1,4 +1,4 @@
-package com.project.userservice.api.dto;
+package user.model;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;

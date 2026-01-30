@@ -1,8 +1,8 @@
 package com.project.userservice.api.service.impl;
 
 
-import com.project.userservice.api.dto.User;
-import com.project.userservice.api.dto.UserStatus;
+import user.model.User;
+import user.model.UserStatus;
 import com.project.userservice.repository.entity.UserEntity;
 import com.project.userservice.repository.UserRepository;
 import com.project.userservice.security.dto.JwtAuthenticationDto;

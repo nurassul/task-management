@@ -1,6 +1,8 @@
 package com.project.taskservice.api.service;
 
 
+import com.project.taskservice.feign.UserClient;
+import jakarta.persistence.EntityNotFoundException;
 import task.kafka.TaskStatusChangedEvent;
 import task.model.TaskDto;
 import task.model.TaskStatus;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClient;
+import user.model.User;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -30,7 +33,7 @@ public class TaskService {
 
     private final TaskRepository taskRepository;
     private final TaskMapper taskMapper;
-    private final RestClient restClient;
+    private final UserClient userClient;
 
     public TaskDto findTaskById(Long id) {
         TaskEntity task = taskRepository.findById(id)
@@ -188,13 +191,8 @@ public class TaskService {
         if(userId == null) {
             return;
         }
-        try {
-            restClient.get()
-                    .uri("http://user-api:8080/users/private/{userId}", userId)
-                    .retrieve()
-                    .toBodilessEntity();
-        } catch (HttpClientErrorException.NotFound e) {
-            throw new NoSuchElementException("User with id= " + userId + " not found!");
-        }
+
+        User creatorUser = userClient.getUserById(userId)
+                .orElseThrow(EntityNotFoundException::new);
     }
 }

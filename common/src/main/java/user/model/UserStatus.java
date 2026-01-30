@@ -1,4 +1,4 @@
-package com.project.userservice.api.dto;
+package user.model;
 
 public enum UserStatus {
     ACTIVE,

@@ -4,20 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fc382bbb-f556-41da-b28b-970f2dfb0fa4" name="Changes" comment="v1. notification-service.&#10;notification only for completed tasks">
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/task/kafka/TaskStatusChangedEvent.java" afterDir="false" />
+    <list default="true" id="fc382bbb-f556-41da-b28b-970f2dfb0fa4" name="Changes" comment="v2. notification-service.&#10;notification for completed tasks and started tasks">
+      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/com/project/notificationservice/api/UserClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/task-service/src/main/java/com/project/taskservice/feign/UserClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/task/kafka/TaskCompletedDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/task/kafka/TaskInProgressDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/com/project/notificationservice/NotificationServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/java/com/project/notificationservice/NotificationServiceApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/com/project/notificationservice/kafka/NotificationKafkaListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/java/com/project/notificationservice/kafka/NotificationKafkaListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task-service/src/main/java/com/project/taskservice/api/controllers/TaskController.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-service/src/main/java/com/project/taskservice/api/controllers/TaskController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task-service/src/main/java/com/project/taskservice/api/model/Priority.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/task/model/Priority.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task-service/src/main/java/com/project/taskservice/api/model/TaskDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/task/model/TaskDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task-service/src/main/java/com/project/taskservice/api/model/TaskStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/task/model/TaskStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/task-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task-service/src/main/java/com/project/taskservice/TaskManagementApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-service/src/main/java/com/project/taskservice/TaskManagementApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/task-service/src/main/java/com/project/taskservice/api/service/TaskService.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-service/src/main/java/com/project/taskservice/api/service/TaskService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task-service/src/main/java/com/project/taskservice/repository/TaskRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-service/src/main/java/com/project/taskservice/repository/TaskRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task-service/src/main/java/com/project/taskservice/repository/entity/TaskEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-service/src/main/java/com/project/taskservice/repository/entity/TaskEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task-service/src/main/java/com/project/taskservice/utils/TaskMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-service/src/main/java/com/project/taskservice/utils/TaskMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task-service/src/main/java/com/project/taskservice/config/AppConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/project/userservice/api/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/project/userservice/api/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/project/userservice/api/dto/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/user/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/project/userservice/api/dto/UserStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/user/model/UserStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/project/userservice/api/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/project/userservice/api/service/impl/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/project/userservice/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/project/userservice/repository/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/project/userservice/repository/entity/UserEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/project/userservice/repository/entity/UserEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/project/userservice/utils/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/project/userservice/utils/UserMapper.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -138,7 +143,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1769760127258</updated>
-      <workItem from="1769760130402" duration="5009000" />
+      <workItem from="1769760130402" duration="12751000" />
     </task>
     <task id="LOCAL-00001" summary="v1. notification-service.&#10;notification only for completed tasks">
       <option name="closed" value="true" />
@@ -148,7 +153,15 @@
       <option name="project" value="LOCAL" />
       <updated>1769764316716</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="v2. notification-service.&#10;notification for completed tasks and started tasks">
+      <option name="closed" value="true" />
+      <created>1769765206230</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1769765206230</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -156,6 +169,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="v1. notification-service.&#10;notification only for completed tasks" />
-    <option name="LAST_COMMIT_MESSAGE" value="v1. notification-service.&#10;notification only for completed tasks" />
+    <MESSAGE value="v2. notification-service.&#10;notification for completed tasks and started tasks" />
+    <option name="LAST_COMMIT_MESSAGE" value="v2. notification-service.&#10;notification for completed tasks and started tasks" />
   </component>
 </project>
