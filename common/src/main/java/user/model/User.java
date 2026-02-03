@@ -1,4 +1,4 @@
-package com.project.userservice.api.dto;
+package user.model;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
@@ -17,6 +17,8 @@ public class User{
 
         @NotNull
         String email;
+
+        Role role;
 
         LocalDateTime registrationDate;
         UserStatus userStatus;

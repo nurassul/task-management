@@ -1,8 +1,8 @@
 package com.project.taskservice.repository.entity;
 
 
-import com.project.taskservice.api.model.Priority;
-import com.project.taskservice.api.model.TaskStatus;
+import task.model.Priority;
+import task.model.TaskStatus;
 import jakarta.persistence.*;
 import lombok.*;
 

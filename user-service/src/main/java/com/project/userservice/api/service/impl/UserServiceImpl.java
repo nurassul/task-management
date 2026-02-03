@@ -1,8 +1,8 @@
 package com.project.userservice.api.service.impl;
 
 
-import com.project.userservice.api.dto.User;
-import com.project.userservice.api.dto.UserStatus;
+import user.model.User;
+import user.model.UserStatus;
 import com.project.userservice.repository.entity.UserEntity;
 import com.project.userservice.repository.UserRepository;
 import com.project.userservice.security.dto.JwtAuthenticationDto;
@@ -124,7 +124,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public JwtAuthenticationDto signIn(UserCredentialsDto userCredentialsDto) throws AuthenticationException {
         UserEntity user = findByCredentials(userCredentialsDto);
-        return jwtService.generateAuthToken(user.getEmail());
+        return jwtService.generateAuthToken(user.getEmail(), user.getRole());
     }
 
     @Override
@@ -132,7 +132,7 @@ public class UserServiceImpl implements UserService {
         String refreshToken = refreshTokenDto.getRefreshToken();
         if (refreshToken != null && jwtService.validateJwtToken(refreshToken)){
             UserEntity user = findByEmail(jwtService.getEmailFromToken(refreshToken));
-            return jwtService.refreshBaseToken(user.getEmail(), refreshToken);
+            return jwtService.refreshBaseToken(user.getEmail(), refreshToken, user.getRole());
         }
 
         throw new AuthenticationException("Invalid refresh token");

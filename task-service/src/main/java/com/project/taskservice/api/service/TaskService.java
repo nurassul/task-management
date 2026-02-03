@@ -1,17 +1,20 @@
 package com.project.taskservice.api.service;
 
 
-import com.project.taskservice.api.model.TaskDto;
-import com.project.taskservice.api.model.TaskStatus;
+import com.project.taskservice.feign.UserClient;
+import jakarta.persistence.EntityNotFoundException;
+import task.kafka.TaskStatusChangedEvent;
+import task.model.TaskDto;
+import task.model.TaskStatus;
 import com.project.taskservice.repository.entity.TaskEntity;
 import com.project.taskservice.repository.TaskRepository;
 import com.project.taskservice.utils.TaskMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.RestClient;
+import user.model.User;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -24,9 +27,11 @@ import java.util.Objects;
 @Service
 public class TaskService {
 
+    private final KafkaTemplate<Long, TaskStatusChangedEvent> kafkaTemplate;
+
     private final TaskRepository taskRepository;
     private final TaskMapper taskMapper;
-    private final RestClient restClient;
+    private final UserClient userClient;
 
     public TaskDto findTaskById(Long id) {
         TaskEntity task = taskRepository.findById(id)
@@ -136,6 +141,17 @@ public class TaskService {
         task.setTaskStatus(TaskStatus.IN_PROGRESS);
         var savedTask = taskRepository.save(task);
 
+
+        var event = new TaskStatusChangedEvent(
+                savedTask.getId(),
+                savedTask.getCreatorId(),
+                savedTask.getAssignedUserId(),
+                task.getTaskStatus(),
+                savedTask.getTaskStatus(),
+                LocalDateTime.now()
+        );
+        kafkaTemplate.send("task-events", id, event);
+
         return taskMapper.toDomainTask(savedTask);
     }
 
@@ -154,6 +170,17 @@ public class TaskService {
         task.setDoneDateTime(LocalDateTime.now());
 
         var savedTask = taskRepository.save(task);
+
+        var event = new TaskStatusChangedEvent(
+                savedTask.getId(),
+                savedTask.getCreatorId(),
+                savedTask.getAssignedUserId(),
+                task.getTaskStatus(),
+                savedTask.getTaskStatus(),
+                LocalDateTime.now()
+        );
+        kafkaTemplate.send("task-events", id, event);
+
         return taskMapper.toDomainTask(savedTask);
     }
 
@@ -162,13 +189,8 @@ public class TaskService {
         if(userId == null) {
             return;
         }
-        try {
-            restClient.get()
-                    .uri("http://user-api:8080/users/private/{userId}", userId)
-                    .retrieve()
-                    .toBodilessEntity();
-        } catch (HttpClientErrorException.NotFound e) {
-            throw new NoSuchElementException("User with id= " + userId + " not found!");
-        }
+
+        User creatorUser = userClient.getUserById(userId)
+                .orElseThrow(EntityNotFoundException::new);
     }
 }

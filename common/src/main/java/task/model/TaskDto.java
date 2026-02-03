@@ -1,4 +1,4 @@
-package com.project.taskservice.api.model;
+package task.model;
 
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;

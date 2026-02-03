@@ -1,7 +1,8 @@
 package com.project.userservice.api.controller;
 
 
-import com.project.userservice.api.dto.User;
+import org.springframework.security.access.prepost.PreAuthorize;
+import user.model.User;
 import com.project.userservice.api.service.impl.UserServiceImpl;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -45,6 +46,7 @@ public class UserController {
                 .body(userService.findUserById(id));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public ResponseEntity<List<User>> getAllUsers() {
 
@@ -66,6 +68,7 @@ public class UserController {
                 .body(userService.createUser(userToCreate));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}/delete")
     public ResponseEntity<Void> deleteUser(
             @PathVariable Long id
@@ -78,6 +81,7 @@ public class UserController {
                 .status(HttpStatus.OK).build();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/{id}/banUser")
     public ResponseEntity<Void> banUser(
             @PathVariable Long id

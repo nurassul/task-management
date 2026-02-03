@@ -2,7 +2,7 @@ package com.project.userservice.repository;
 
 
 import com.project.userservice.repository.entity.UserEntity;
-import com.project.userservice.api.dto.UserStatus;
+import user.model.UserStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

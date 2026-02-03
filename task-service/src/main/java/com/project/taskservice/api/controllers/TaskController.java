@@ -1,6 +1,6 @@
 package com.project.taskservice.api.controllers;
 
-import com.project.taskservice.api.model.TaskDto;
+import task.model.TaskDto;
 import com.project.taskservice.api.service.TaskService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
