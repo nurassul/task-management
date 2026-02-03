@@ -2,6 +2,7 @@ package com.project.notificationservice.kafka;
 
 
 import com.project.notificationservice.api.UserClient;
+import com.project.notificationservice.api.service.EmailSenderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -15,22 +16,21 @@ import user.model.User;
 public class NotificationKafkaListener {
 
     private final UserClient userClient;
+    private final EmailSenderService emailSenderService;
 
     @KafkaListener(topics = "task-events", groupId = "notification-group")
     public void handleStatusChange(TaskStatusChangedEvent event) {
 
         log.info("Получено событие: {}", event);
 
-        // 1. Узнаем, кому отправлять (Assigned User)
         if (event.assignedUserId() != null) {
             try {
-                // Магический вызов HTTP-запроса через Feign
                 User creatorUser = userClient.getUserById(event.creatorId());
 
                 log.info("📧 Готовим письмо для: {} ({})", creatorUser.getUsername(), creatorUser.getEmail());
                 log.info("Тема: Задача {} перешла в статус {}", event.taskId(), event.newStatus());
 
-                // В следующем шаге тут будет вызов sendEmail(user.email(), ...)
+                emailSenderService.sendTaskNotification(creatorUser.getEmail(), event.taskId(), event.newStatus().name());
 
             } catch (Exception e) {
                 log.error("Не удалось получить данные пользователя {}: {}", event.assignedUserId(), e.getMessage());

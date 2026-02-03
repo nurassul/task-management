@@ -9,6 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import user.model.Role;
 
 import javax.crypto.SecretKey;
 import java.time.LocalDateTime;
@@ -23,16 +24,16 @@ public class JwtService {
     @Value("f9f4180a2ec3cbc2104f873b6cc91c67267770349c8232fa8c23a24b3f9b714542f9abc1")
     private String jwtSecret;
 
-    public JwtAuthenticationDto generateAuthToken(String email) {
+    public JwtAuthenticationDto generateAuthToken(String email, Role role) {
         JwtAuthenticationDto jwtDto = new JwtAuthenticationDto();
-        jwtDto.setToken(generateJwtToken(email));
+        jwtDto.setToken(generateJwtToken(email, role));
         jwtDto.setRefreshToken(generateRefreshToken(email));
         return jwtDto;
     }
 
-    public JwtAuthenticationDto refreshBaseToken(String email, String refreshToken) {
+    public JwtAuthenticationDto refreshBaseToken(String email, String refreshToken, Role role) {
         JwtAuthenticationDto jwtDto = new JwtAuthenticationDto();
-        jwtDto.setToken(generateJwtToken(email));
+        jwtDto.setToken(generateJwtToken(email, role));
         jwtDto.setRefreshToken(refreshToken);
         return jwtDto;
     }
@@ -46,13 +47,25 @@ public class JwtService {
         return claims.getSubject();
     }
 
+    public String getRoleFromToken(String token) {
+        try {
+            return getAllClaimsFromToken(token).get("role", String.class);
+        } catch (Exception e) {
+            return Role.ROLE_USER.name();
+        }
+    }
+
+    private Claims getAllClaimsFromToken(String token) {
+        return Jwts.parser()
+                .verifyWith(getSignInKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+    }
+
     public boolean validateJwtToken(String token) {
         try {
-            Jwts.parser()
-                    .verifyWith(getSignInKey())
-                    .build()
-                    .parseSignedClaims(token)
-                    .getPayload();
+            getAllClaimsFromToken(token);
             return true;
         } catch (ExpiredJwtException expiredJwtException){
             LOGGER.error("Expired JwtException", expiredJwtException);
@@ -70,10 +83,12 @@ public class JwtService {
     }
 
 
-    private String generateJwtToken(String email) {
+    private String generateJwtToken(String email, Role role) {
         Date date = Date.from(LocalDateTime.now().plusMinutes(30).atZone(ZoneId.systemDefault()).toInstant());
+
         return Jwts.builder()
                 .subject(email)
+                .claim("role", role.name())
                 .expiration(date)
                 .signWith(getSignInKey())
                 .compact();

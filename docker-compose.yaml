@@ -5,10 +5,10 @@ services:
     image: postgres:15-alpine
     container_name: postgresdb
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
     ports:
-      - "5432:5432"
+      - "5433:5432"
     networks:
       - app-network
     volumes:
@@ -60,9 +60,9 @@ services:
     networks:
       - app-network
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/user-db
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/${DB_uNAME}
+      SPRING_DATASOURCE_USERNAME: ${DB_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
       SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
 
   task-api:
@@ -80,9 +80,9 @@ services:
     networks:
       - app-network
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/task-db
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/${DB_tNAME}
+      SPRING_DATASOURCE_USERNAME: ${DB_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
       SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
       SERVICES_USER_SERVICE_URL: http://user-api:8080
 
@@ -100,6 +100,8 @@ services:
       - app-network
     environment:
       SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+      SPRING_MAIL_USERNAME: ${GMAIL_USER}
+      SPRING_MAIL_PASSWORD: ${GMAIL_PASSWORD}
 
 volumes:
   db_data:

@@ -18,6 +18,8 @@ public class User{
         @NotNull
         String email;
 
+        Role role;
+
         LocalDateTime registrationDate;
         UserStatus userStatus;
         String password;
