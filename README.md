@@ -117,7 +117,6 @@ The User Service uses **JWT** for authentication:
 ## 📚 Additional Resources
 
 - [Spring Boot Documentation](https://spring.io/projects/spring-boot)
-- [Spring RestClient Guide](https://spring.io/blog/2023/07/13/new-in-spring-6-1-restclient)
 - [Docker Compose Documentation](https://docs.docker.com/compose/)
 - [PostgreSQL Documentation](https://www.postgresql.org/docs/)
 
