@@ -13,7 +13,7 @@ The Task Management System allows you to manage users and tasks efficiently. It 
 - **Infrastructure**: Fully containerized with **Docker** for easy deployment.
 
 ## 🛠️ Tech Stack
-
+`
 | Component | Technology |
 |-----------|------------|-------------|
 | **Core Framework** | Spring Boot 3.5.7 |
@@ -26,6 +26,7 @@ The Task Management System allows you to manage users and tasks efficiently. It 
 | **Authentication** | JWT (JSON Web Tokens) | Stateless authentication |
 | **Containerization** | Docker & Docker Compose | Container orchestration |
 | **Build Tool** | Maven | Dependency management |
+`
 
 ## 🚀 Getting Started
 
