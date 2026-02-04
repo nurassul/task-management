@@ -1,6 +1,6 @@
 # Task Management System
 
-A robust microservices-based system for managing tasks and users, built with **Spring Boot 3**. This project demonstrates a scalable architecture using modern practices like **RestClient** for inter-service communication, **Docker Compose** for orchestration, and **PostgreSQL** as the persistent data store.
+A robust microservices-based system for managing tasks and users with notification-service, built with **Spring Boot 3**.
 
 ## 📋 Project Overview
 
@@ -8,68 +8,26 @@ The Task Management System allows you to manage users and tasks efficiently. It 
 
 - **Task Service**: Manages taskDto lifecycles (create, read, update, delete, start, complete) with business logic.
 - **User Service**: Handles user registration, authentication (JWT), profile management, and user banning.
-- **Communication**: Services talk to each other using **Spring's RestClient** for synchronous REST calls.
-- **Database**: A shared **PostgreSQL** instance stores all data.
+- **Communication**: Services talk to each other using Spring Cloud OpenFeign. Also for asynchronous communication integrated Kafka for notification-service
+- **Database**: A shared **PostgreSQL** instance stores all data. MongoDB for saving notification history.
 - **Infrastructure**: Fully containerized with **Docker** for easy deployment.
 
 ## 🛠️ Tech Stack
 
-| Component | Technology | Description |
+| Component | Technology |
 |-----------|------------|-------------|
-| **Core Framework** | Spring Boot 3.x | Application framework |
-| **Language** | Java 17 | Core programming language |
-| **Database** | PostgreSQL 15 | Relational database |
+| **Core Framework** | Spring Boot 3.5.7 |
+| **Language** | Java 17 |
+| **Database** | PostgreSQL | MongoDB |
 | **ORM** | Spring Data JPA | Data persistence and Hibernate |
-| **HTTP Client** | Spring RestClient | HTTP client for microservice communication |
+| Migrations |	Liquibase |	Database schema version control
+| **HTTP Client** | Spring Cloud OpenFeign |
+| **Asynchronous Communication** | Kafka |
 | **Authentication** | JWT (JSON Web Tokens) | Stateless authentication |
 | **Containerization** | Docker & Docker Compose | Container orchestration |
 | **Build Tool** | Maven | Dependency management |
 
-## 📁 Project Structure
-
-```
-taskDto-management/
-├── taskDto-service/               # Task management microservice
-│   ├── src/main/java/com/project/taskservice/
-│   │   ├── config/
-│   │   │   └── AppConfig.java              # RestClient bean configuration
-│   │   ├── controllers/
-│   │   │   └── TaskController.java         # Task REST endpoints
-│   │   ├── service/
-│   │   │   └── TaskService.java            # Business logic
-│   │   ├── model/
-│   │   │   └── Task.java                   # Task entity
-│   │   └── ...
-│   ├── Dockerfile              # Docker build instruction
-│   └── pom.xml                 # Maven dependencies
-│
-├── user-service/               # User management microservice
-│   ├── src/main/java/com/project/userservice/
-│   │   ├── controller/
-│   │   │   ├── AuthController.java         # Authentication endpoints
-│   │   │   └── UserController.java         # User management endpoints
-│   │   ├── service/
-│   │   │   └── UserService.java            # Business logic
-│   │   ├── dto/
-│   │   │   ├── User.java
-│   │   │   ├── UserCredentialsDto.java
-│   │   │   └── JwtAuthenticationDto.java
-│   │   └── ...
-│   ├── Dockerfile              # Docker build instruction
-│   └── pom.xml                 # Maven dependencies
-│
-├── docker-compose.yml          # Container orchestration config
-└── README.md                   # Project documentation
-```
-
 ## 🚀 Getting Started
-
-### Prerequisites
-
-Ensure you have the following installed:
-- **Docker** & **Docker Compose**
-- **Java 17** (optional, for local development)
-- **Maven** (optional, for local builds)
 
 ### 📦 Installation & Run via Docker (Recommended)
 
@@ -93,7 +51,6 @@ Ensure you have the following installed:
    ```bash
    docker-compose ps
    ```
-   You should see `taskDto-service`, `user-service`, and `postgres` running.
 
 ## 🌐 API Endpoints
 
@@ -139,34 +96,10 @@ Base URL: `http://localhost:8081/users`
 | `DELETE` | `/users/{id}/delete` | Delete user |
 | `POST` | `/users/{id}/banUser` | Ban user |
 
-## 📡 Inter-Service Communication
+### MongoDB Express
 
-### RestClient Configuration
+To monitor Mongo database: `http://localhost:8085`
 
-The `AppConfig` class in `taskDto-service` defines a `RestClient` bean:
-
-```java
-@Configuration
-public class AppConfig {
-    @Bean
-    public RestClient restClient() {
-        return RestClient.builder().build();
-    }
-}
-```
-
-The **Task Service** uses `RestClient` to communicate with **User Service** for:
-- Validating user existence
-- Fetching user information
-- Assigning tasks to users
-
-Example usage pattern:
-```java
-restClient.get()
-    .uri("http://user-service:8081/users/{id}")
-    .retrieve()
-    .body(User.class);
-```
 
 ## 🔐 Authentication & Security
 
