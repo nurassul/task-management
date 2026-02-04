@@ -18,7 +18,7 @@ The Task Management System allows you to manage users and tasks efficiently. It 
 |-----------|------------|-------------|
 | **Core Framework** | Spring Boot 3.5.7 |
 | **Language** | Java 17 |
-| **Database** | PostgreSQL | MongoDB |
+| **Database** | PostgreSQL & MongoDB |
 | **ORM** | Spring Data JPA | Data persistence and Hibernate |
 | **Migrations** | Liquibase | Database schema version control
 | **HTTP Client** | Spring Cloud OpenFeign |
