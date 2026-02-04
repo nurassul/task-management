@@ -34,8 +34,8 @@ The Task Management System allows you to manage users and tasks efficiently. It 
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/nurassul/taskDto-management.git
-   cd taskDto-management
+   git clone https://github.com/nurassul/task-management.git
+   cd task-management
    ```
 
 2. **Build and start services:**
