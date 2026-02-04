@@ -13,20 +13,20 @@ The Task Management System allows you to manage users and tasks efficiently. It 
 - **Infrastructure**: Fully containerized with **Docker** for easy deployment.
 
 ## 🛠️ Tech Stack
-`
-| Component | Technology |
+
+| Component | Technology | Description |
 |-----------|------------|-------------|
 | **Core Framework** | Spring Boot 3.5.7 |
 | **Language** | Java 17 |
 | **Database** | PostgreSQL | MongoDB |
 | **ORM** | Spring Data JPA | Data persistence and Hibernate |
-| Migrations |	Liquibase |	Database schema version control
+| **Migrations** | Liquibase | Database schema version control
 | **HTTP Client** | Spring Cloud OpenFeign |
 | **Asynchronous Communication** | Kafka |
 | **Authentication** | JWT (JSON Web Tokens) | Stateless authentication |
 | **Containerization** | Docker & Docker Compose | Container orchestration |
 | **Build Tool** | Maven | Dependency management |
-`
+
 
 ## 🚀 Getting Started
 
