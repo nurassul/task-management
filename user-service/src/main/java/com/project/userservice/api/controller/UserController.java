@@ -36,14 +36,30 @@ public class UserController {
     }
 
     @GetMapping("/private/{id}")
-    public ResponseEntity<User> getUserByIdPrivate(
+    public ResponseEntity<User> getPrivateUser(
             @PathVariable("id") Long id
     ) {
-        log.info("Called findUserByIdPrivate(): id={}", id);
+        log.info("Called getPrivate(): id={}", id);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(userService.findUserById(id));
+    }
+
+    @GetMapping("/check-existing/{id}")
+    public ResponseEntity<Boolean> checkUserExisting(
+            @PathVariable("id") Long id
+    ) {
+        log.info("Called findUserByIdPrivate(): id={}", id);
+
+       if(userService.checkExistingUser(id)) {
+           return ResponseEntity
+                   .status(HttpStatus.OK)
+                   .body(Boolean.TRUE);
+       }
+
+       return ResponseEntity.badRequest()
+               .build();
     }
 
     @PreAuthorize("hasRole('ADMIN')")

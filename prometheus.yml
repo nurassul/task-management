@@ -1,0 +1,11 @@
+global:
+  scrape_interval: 10s # Как часто забирать метрики
+  evaluation_interval: 10s
+
+scrape_configs:
+  - job_name: 'microservices'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['user-api:8080', 'task-api:8080', 'notification-api:8080', 'api-gateway:8080']
+        labels:
+          application: 'task-management-system'

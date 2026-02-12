@@ -190,7 +190,7 @@ public class TaskService {
             return;
         }
 
-        User creatorUser = userClient.getUserById(userId)
+        Boolean checkFlag = userClient.checkUserExisting(userId)
                 .orElseThrow(EntityNotFoundException::new);
     }
 }

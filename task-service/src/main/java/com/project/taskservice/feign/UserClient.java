@@ -11,6 +11,6 @@ import java.util.Optional;
 @FeignClient(name = "user-api", url = "http://user-api:8080")
 public interface UserClient {
 
-    @GetMapping("/users/private/{id}")
-    Optional<User> getUserById(@PathVariable("id") Long id);
+    @GetMapping("/users/check-existing/{id}")
+    Optional<Boolean> checkUserExisting(@PathVariable("id") Long id);
 }

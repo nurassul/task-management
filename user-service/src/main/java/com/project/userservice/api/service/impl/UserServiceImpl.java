@@ -43,6 +43,13 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    public boolean checkExistingUser(Long id) {
+        var user = userRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Entity with id= " + id + ", not found!"));
+
+        return user != null;
+    }
+
     // find all users
     public List<User> findAllUsers() {
         return userRepository.findAll()
