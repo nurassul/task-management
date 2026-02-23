@@ -35,6 +35,7 @@ public class EmailSenderService {
                     "<p>Привет! У нас есть новости по твоей задаче:</p>" +
                     "<div style='background-color: #f4f4f4; padding: 15px; border-left: 4px solid #004a99;'>" +
                     "<p><strong>Статус:</strong> <span style='color: green;'>" + taskStatus + "</span></p>" +
+                    "<p><strong>ID task:</strong> <span style='color: white;'>" + id + "</span></p>" +
                     "</div>" +
                     "<br>" +
                     "</body>" +
