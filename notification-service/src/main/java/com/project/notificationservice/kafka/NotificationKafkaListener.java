@@ -1,8 +1,6 @@
 package com.project.notificationservice.kafka;
 
-
 import com.project.notificationservice.api.UserClient;
-import com.project.notificationservice.api.repository.NotificationRepository;
 import com.project.notificationservice.api.service.EmailSenderService;
 import com.project.notificationservice.api.service.NotificationService;
 import lombok.RequiredArgsConstructor;
@@ -21,25 +19,29 @@ public class NotificationKafkaListener {
     private final EmailSenderService emailSenderService;
     private final NotificationService notificationService;
 
-
     @KafkaListener(topics = "task-events", groupId = "notification-group")
     public void handleStatusChange(TaskStatusChangedEvent event) {
+        log.info("Received event: {}", event);
 
-        log.info("Получено событие: {}", event);
+        if (event.assignedUserId() == null) {
+            return;
+        }
 
-        if (event.assignedUserId() != null) {
-            try {
-                User creatorUser = userClient.getUserById(event.creatorId());
+        try {
+            User assignedUser = userClient.getUserById(event.assignedUserId());
 
-                log.info("📧 Готовим письмо для: {} ({})", creatorUser.getUsername(), creatorUser.getEmail());
-                log.info("Тема: Задача {} перешла в статус {}", event.taskId(), event.newStatus());
+            log.info("Preparing email for: {} ({})", assignedUser.getUsername(), assignedUser.getEmail());
+            log.info("Task {} changed status to {}", event.taskId(), event.newStatus());
 
-                emailSenderService.sendTaskNotification(creatorUser.getEmail(), creatorUser.getId(), event.newStatus().name());
-                notificationService.saveNotification(event);
-            } catch (Exception e) {
-                log.error("Не удалось получить данные пользователя {}: {}", event.assignedUserId(), e.getMessage());
-            }
+            emailSenderService.sendTaskNotification(
+                    assignedUser.getEmail(),
+                    event.taskId(),
+                    event.newStatus().name()
+            );
+
+            notificationService.saveNotification(event);
+        } catch (Exception e) {
+            log.error("Failed to send notification for user {}", event.assignedUserId(), e);
         }
     }
-
 }

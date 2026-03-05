@@ -27,7 +27,7 @@ public class EmailSenderService {
 
             helper.setFrom(sender);
             helper.setTo(to);
-            helper.setSubject("Уведомление по задаче: " + id);
+            helper.setSubject("Уведомление по задаче: №" + id);
 
             String htmlBody = "<html>" +
                     "<body style='font-family: Arial, sans-serif;'>" +

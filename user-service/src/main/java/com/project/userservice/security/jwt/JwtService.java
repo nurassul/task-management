@@ -1,27 +1,30 @@
 package com.project.userservice.security.jwt;
 
-
 import com.project.userservice.security.dto.JwtAuthenticationDto;
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.security.SecurityException;
+import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import user.model.Role;
 
 import javax.crypto.SecretKey;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 
 @Component
+@Slf4j
 public class JwtService {
 
-    private static final Logger LOGGER = LogManager.getLogger(JwtService.class);
-
-    @Value("f9f4180a2ec3cbc2104f873b6cc91c67267770349c8232fa8c23a24b3f9b714542f9abc1")
+    @Value("${JWT_SECRET:f9f4180a2ec3cbc2104f873b6cc91c67267770349c8232fa8c23a24b3f9b714542f9abc1}")
     private String jwtSecret;
 
     public JwtAuthenticationDto generateAuthToken(String email, Role role) {
@@ -67,21 +70,20 @@ public class JwtService {
         try {
             getAllClaimsFromToken(token);
             return true;
-        } catch (ExpiredJwtException expiredJwtException){
-            LOGGER.error("Expired JwtException", expiredJwtException);
+        } catch (ExpiredJwtException expiredJwtException) {
+            log.error("Expired JwtException", expiredJwtException);
         } catch (UnsupportedJwtException unsupportedJwtException) {
-            LOGGER.error("Unsupported JwtException", unsupportedJwtException);
+            log.error("Unsupported JwtException", unsupportedJwtException);
         } catch (MalformedJwtException malformedJwtException) {
-            LOGGER.error("Malformed JwtException", malformedJwtException);
+            log.error("Malformed JwtException", malformedJwtException);
         } catch (SecurityException securityException) {
-            LOGGER.error("Security Exception", securityException);
+            log.error("Security Exception", securityException);
         } catch (Exception ex) {
-            LOGGER.error("Invalid token", ex);
+            log.error("Invalid token", ex);
         }
 
         return false;
     }
-
 
     private String generateJwtToken(String email, Role role) {
         Date date = Date.from(LocalDateTime.now().plusMinutes(30).atZone(ZoneId.systemDefault()).toInstant());
@@ -104,7 +106,12 @@ public class JwtService {
     }
 
     private SecretKey getSignInKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(jwtSecret);
+        byte[] keyBytes;
+        try {
+            keyBytes = Decoders.BASE64.decode(jwtSecret);
+        } catch (IllegalArgumentException ex) {
+            keyBytes = jwtSecret.getBytes(StandardCharsets.UTF_8);
+        }
         return Keys.hmacShaKeyFor(keyBytes);
     }
 }

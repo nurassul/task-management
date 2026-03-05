@@ -6,12 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="fc382bbb-f556-41da-b28b-970f2dfb0fa4" name="Changes" comment="integrated Loki for final version of monitoring">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/com/project/notificationservice/api/service/EmailSenderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/java/com/project/notificationservice/api/service/EmailSenderService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/task-service/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -168,6 +163,8 @@
       <workItem from="1770962551585" duration="599000" />
       <workItem from="1771575976392" duration="641000" />
       <workItem from="1771825610380" duration="4848000" />
+      <workItem from="1772351430455" duration="454000" />
+      <workItem from="1772530416801" duration="662000" />
     </task>
     <task id="LOCAL-00001" summary="v1. notification-service.&#10;notification only for completed tasks">
       <option name="closed" value="true" />

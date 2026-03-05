@@ -1,6 +1,5 @@
 package com.project.taskservice.api.exceptions;
 
-
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -10,16 +9,14 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.time.LocalDateTime;
+import java.util.NoSuchElementException;
 
 @ControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
 
-
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponseDTO> handleGenericException(
-            Exception e
-    ) {
+    public ResponseEntity<ErrorResponseDTO> handleGenericException(Exception e) {
         log.error("Handle exception", e);
 
         var errorResponseDTO = new ErrorResponseDTO(
@@ -33,10 +30,8 @@ public class GlobalExceptionHandler {
                 .body(errorResponseDTO);
     }
 
-    @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<ErrorResponseDTO> handleEntityNotFound(
-            EntityNotFoundException e
-    ) {
+    @ExceptionHandler({EntityNotFoundException.class, NoSuchElementException.class})
+    public ResponseEntity<ErrorResponseDTO> handleEntityNotFound(RuntimeException e) {
         log.error("Handle EntityNotFound", e);
 
         var errorResponseDTO = new ErrorResponseDTO(
@@ -55,9 +50,7 @@ public class GlobalExceptionHandler {
             IllegalStateException.class,
             MethodArgumentNotValidException.class
     })
-    public ResponseEntity<ErrorResponseDTO> handleBadRequest(
-            Exception e
-    ) {
+    public ResponseEntity<ErrorResponseDTO> handleBadRequest(Exception e) {
         log.error("Handle badRequest", e);
 
         var errorResponseDTO = new ErrorResponseDTO(
@@ -70,8 +63,4 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.BAD_REQUEST)
                 .body(errorResponseDTO);
     }
-
-
-
-
 }
