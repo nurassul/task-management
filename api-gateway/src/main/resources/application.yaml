@@ -1,0 +1,43 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: user-service
+          uri: http://user-api:8080
+          predicates:
+            - Path=/auth/**, /users/**
+
+        - id: task-service
+          uri: http://task-api:8080
+          predicates:
+            - Path=/tasks/**
+
+        - id: notification-api
+          uri: http://notification-api:8080
+          predicates:
+            - Path=/notifications/**
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+    skip-pattern: "/actuator.*|/metrics.*|/favicon.ico"
+
+  zipkin:
+    tracing:
+      endpoint: "http://zipkin:9411/api/v2/spans"
+
+  endpoints:
+    web:
+      exposure:
+        include: health, info, prometheus
+
+  metrics:
+    tags:
+      application: api-gateway
+logging:
+  pattern:
+    level: "%d{yyyy-MM-dd HH:mm:ss} %-5level [${spring.application.name},%X{traceId:-},%X{spanId:-}] %msg%n"

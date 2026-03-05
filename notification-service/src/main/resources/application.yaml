@@ -1,6 +1,9 @@
 spring:
+  application:
+    name: notification-service
+
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS:kafka:9092}
     producer:
       key-serializer: org.apache.kafka.common.serialization.LongSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
@@ -24,3 +27,20 @@ spring:
   data:
     mongodb:
       uri: ${SPRING_DATA_MONGODB_URI:mongodb://root:root@localhost:27017/notifications?authSource=admin}
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+  zipkin:
+    tracing:
+      endpoint: "http://zipkin:9411/api/v2/spans"
+  endpoints:
+    web:
+      exposure:
+        include: health, info, prometheus
+  metrics:
+    tags:
+      application: notification-service
+logging:
+  pattern:
+    level: "%d{yyyy-MM-dd HH:mm:ss} %-5level [${spring.application.name},%X{traceId:-},%X{spanId:-}] %msg%n"

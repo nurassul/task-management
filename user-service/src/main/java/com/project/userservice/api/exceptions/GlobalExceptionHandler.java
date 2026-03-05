@@ -1,16 +1,14 @@
 package com.project.userservice.api.exceptions;
 
-
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
-import javax.naming.AuthenticationException;
 import java.time.LocalDateTime;
 
 @Slf4j
@@ -18,9 +16,7 @@ import java.time.LocalDateTime;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponseDTO> handleGenericException(
-            Exception e
-    ) {
+    public ResponseEntity<ErrorResponseDTO> handleGenericException(Exception e) {
         log.error("Handle exception", e);
 
         var errorResponseDTO = new ErrorResponseDTO(
@@ -35,9 +31,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<ErrorResponseDTO> handleEntityNotFound(
-            EntityNotFoundException e
-    ) {
+    public ResponseEntity<ErrorResponseDTO> handleEntityNotFound(EntityNotFoundException e) {
         log.error("Handle EntityNotFound", e);
 
         var errorResponseDTO = new ErrorResponseDTO(
@@ -56,9 +50,7 @@ public class GlobalExceptionHandler {
             IllegalStateException.class,
             MethodArgumentNotValidException.class
     })
-    public ResponseEntity<ErrorResponseDTO> handleBadRequest(
-            Exception e
-    ) {
+    public ResponseEntity<ErrorResponseDTO> handleBadRequest(Exception e) {
         log.error("Handle badRequest", e);
 
         var errorResponseDTO = new ErrorResponseDTO(
@@ -73,9 +65,15 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(AuthenticationException.class)
-    @ResponseStatus(HttpStatus.FORBIDDEN)
-    public ResponseEntity<String> handleException(AuthenticationException ex) {
-        return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                .body("Authentication failed " + ex.getMessage());
+    public ResponseEntity<ErrorResponseDTO> handleAuthException(AuthenticationException ex) {
+        var errorResponseDTO = new ErrorResponseDTO(
+                "Authentication failed",
+                ex.getMessage(),
+                LocalDateTime.now()
+        );
+
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body(errorResponseDTO);
     }
 }

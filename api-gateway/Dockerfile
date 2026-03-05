@@ -1,3 +1,4 @@
+# ===== BUILD STAGE =====
 FROM maven:3.9.6-eclipse-temurin-21 AS builder
 WORKDIR /app
 
@@ -16,13 +17,13 @@ COPY task-service/src ./task-service/src
 COPY notification-service/src ./notification-service/src
 COPY api-gateway/src ./api-gateway/src
 
-RUN mvn clean package -pl :user-service -am -DskipTests -B
+RUN mvn clean package -pl :api-gateway -am -DskipTests -B
 
 
 FROM eclipse-temurin:21-jre
 WORKDIR /app
 
-COPY --from=builder /app/user-service/target/user-service-0.0.1-SNAPSHOT.jar app.jar
+COPY --from=builder /app/api-gateway/target/api-gateway-0.0.1-SNAPSHOT.jar app.jar
 
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"]

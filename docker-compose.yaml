@@ -1,6 +1,10 @@
 version: '3.8'
 
 services:
+
+  # --- INFRASTRUCTURE ---
+
+  # For PostgresSQL Database
   db:
     image: postgres:15-alpine
     container_name: postgresdb
@@ -15,11 +19,26 @@ services:
       - db_data:/var/lib/postgresql/data
       - ./db-init/init.sql:/docker-entrypoint-initdb.d/init.sql
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      test: [ "CMD-SHELL", "pg_isready -U ${DB_USERNAME}" ]
       interval: 5s
       timeout: 5s
       retries: 5
 
+  # Zipkin
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: zipkin
+    ports:
+      - "9411:9411"
+    networks:
+      - app-network
+    healthcheck:
+      test: [ "CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:9411/health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Asynchronic Communication Kafka with KRaft
   kafka:
     image: confluentinc/cp-kafka:8.1.1
     container_name: kafka-broker
@@ -47,63 +66,7 @@ services:
       timeout: 10s
       retries: 5
 
-  user-api:
-    build:
-      context: .
-      dockerfile: user-service/Dockerfile
-    container_name: user-api
-    ports:
-      - "8081:8080"
-    depends_on:
-      db:
-        condition: service_healthy
-    networks:
-      - app-network
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/${DB_uNAME}
-      SPRING_DATASOURCE_USERNAME: ${DB_USERNAME}
-      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
-      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
-
-  task-api:
-    build:
-      context: .
-      dockerfile: task-service/Dockerfile
-    container_name: task-api
-    ports:
-      - "8082:8080"
-    depends_on:
-      db:
-        condition: service_healthy
-      kafka:
-        condition: service_healthy
-    networks:
-      - app-network
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/${DB_tNAME}
-      SPRING_DATASOURCE_USERNAME: ${DB_USERNAME}
-      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
-      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
-      SERVICES_USER_SERVICE_URL: http://user-api:8080
-
-  notification-api:
-    build:
-      context: .
-      dockerfile: notification-service/Dockerfile
-    container_name: notification-api
-    ports:
-      - "8083:8080"
-    depends_on:
-      kafka:
-        condition: service_healthy
-    networks:
-      - app-network
-    environment:
-      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
-      SPRING_MAIL_USERNAME: ${GMAIL_USER}
-      SPRING_MAIL_PASSWORD: ${GMAIL_PASSWORD}
-      SPRING_DATA_MONGODB_URI: mongodb://root:root@mongo:27017/notifications?authSource=admin
-
+  # NoSQL database for logging and saving notifications
   mongo:
     image: mongo:latest
     container_name: mongodb
@@ -117,6 +80,7 @@ services:
     volumes:
       - mongo_data:/data/db
 
+  # MongoDB UI
   mongo-express:
     image: mongo-express
     container_name: mongo-ui
@@ -130,6 +94,124 @@ services:
       - app-network
     depends_on:
       - mongo
+
+
+  # --- MICROSERVICES ---
+
+  # user-service for managing users
+  user-api:
+    build:
+      context: .
+      dockerfile: user-service/Dockerfile
+    container_name: user-api
+    depends_on:
+      db:
+        condition: service_healthy
+      zipkin:
+        condition: service_healthy
+    networks:
+      - app-network
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/${DB_uNAME}
+      SPRING_DATASOURCE_USERNAME: ${DB_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+
+  # task-service for managing tasks
+  task-api:
+    build:
+      context: .
+      dockerfile: task-service/Dockerfile
+    container_name: task-api
+    depends_on:
+      db:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+      zipkin:
+        condition: service_healthy
+    networks:
+      - app-network
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/${DB_tNAME}
+      SPRING_DATASOURCE_USERNAME: ${DB_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+      SERVICES_USER_SERVICE_URL: http://user-api:8080
+
+  # notification-service for sending emails and logging notifications in MongoDB
+  notification-api:
+    build:
+      context: .
+      dockerfile: notification-service/Dockerfile
+    container_name: notification-api
+    depends_on:
+      zipkin:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+      mongo:
+        condition: service_started
+    networks:
+      - app-network
+    environment:
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+      SPRING_MAIL_USERNAME: ${GMAIL_USER}
+      SPRING_MAIL_PASSWORD: ${GMAIL_PASSWORD}
+      SPRING_DATA_MONGODB_URI: mongodb://root:root@mongo:27017/notifications?authSource=admin
+
+  # entry-point for all services
+  api-gateway:
+    build:
+      context: .
+      dockerfile: api-gateway/Dockerfile
+    container_name: api-gateway
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
+    depends_on:
+      - zipkin
+      - user-api
+      - task-api
+      - notification-api
+
+
+  # --- OBSERVABILITY ---
+
+  # Getting metrics from services
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - app-network
+
+  # Getting logs for monitoring
+  loki:
+    image: grafana/loki:latest
+    container_name: loki
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+    networks:
+      - app-network
+
+  # Getting metrics from prom and making graphs
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    networks:
+      - app-network
+    depends_on:
+      - prometheus
 
 volumes:
   db_data:

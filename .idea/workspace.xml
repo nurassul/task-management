@@ -4,18 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fc382bbb-f556-41da-b28b-970f2dfb0fa4" name="Changes" comment="v2.1 notification-service.&#10;changed RestClient (task-service) to OpenFeign">
-      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/com/project/notificationservice/api/mongodb/NotificationLog.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/com/project/notificationservice/api/repository/NotificationRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/com/project/notificationservice/api/service/NotificationService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/com/project/notificationservice/utils/NotificationMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+    <list default="true" id="fc382bbb-f556-41da-b28b-970f2dfb0fa4" name="Changes" comment="integrated Loki for final version of monitoring">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/com/project/notificationservice/kafka/NotificationKafkaListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/java/com/project/notificationservice/kafka/NotificationKafkaListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/com/project/notificationservice/api/service/EmailSenderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/java/com/project/notificationservice/api/service/EmailSenderService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,11 +16,11 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Dockerfile" />
         <option value="Record" />
         <option value="Enum" />
         <option value="Interface" />
         <option value="Class" />
+        <option value="Dockerfile" />
       </list>
     </option>
   </component>
@@ -74,10 +65,10 @@
     &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;api-gateway&quot;,
     &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/paind/task-management/pom.xml&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/paind/task-management/user-service/src/main/resources&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -97,6 +88,13 @@
     ]
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\paind\task-management\user-service\src\main\resources" />
+      <recent name="C:\Users\paind\task-management\task-service\src\main\resources" />
+      <recent name="C:\Users\paind\task-management\notification-service\src\main\resources" />
+    </key>
+  </component>
   <component name="RunDashboard">
     <option name="configurationTypes">
       <set>
@@ -108,6 +106,13 @@
     </option>
   </component>
   <component name="RunManager" selected="Spring Boot.TaskManagementApplication">
+    <configuration name="ApiGatewayApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="api-gateway" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.project.apigateway.ApiGatewayApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="NotificationServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="notification-service" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.project.notificationservice.NotificationServiceApplication" />
@@ -148,7 +153,18 @@
       <workItem from="1769760130402" duration="32234000" />
       <workItem from="1770099342956" duration="6748000" />
       <workItem from="1770122010106" duration="3805000" />
-      <workItem from="1770183169055" duration="4199000" />
+      <workItem from="1770183169055" duration="6143000" />
+      <workItem from="1770224210826" duration="10040000" />
+      <workItem from="1770465751124" duration="3582000" />
+      <workItem from="1770544952390" duration="12315000" />
+      <workItem from="1770705770330" duration="1887000" />
+      <workItem from="1770807583904" duration="1657000" />
+      <workItem from="1770874910257" duration="7315000" />
+      <workItem from="1770962551585" duration="599000" />
+      <workItem from="1771575976392" duration="641000" />
+      <workItem from="1771825610380" duration="4848000" />
+      <workItem from="1772351430455" duration="454000" />
+      <workItem from="1772530416801" duration="662000" />
     </task>
     <task id="LOCAL-00001" summary="v1. notification-service.&#10;notification only for completed tasks">
       <option name="closed" value="true" />
@@ -174,7 +190,39 @@
       <option name="project" value="LOCAL" />
       <updated>1769776919056</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="integrated MongoDB in notification-service to have history of notifications">
+      <option name="closed" value="true" />
+      <created>1770191148717</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1770191148717</updated>
+    </task>
+    <task id="LOCAL-00005" summary="integrated Spring Cloud Gateway">
+      <option name="closed" value="true" />
+      <created>1770293989508</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1770293989508</updated>
+    </task>
+    <task id="LOCAL-00006" summary="integrated Prometheus, Grafana and Zipkin for monitoring">
+      <option name="closed" value="true" />
+      <created>1770884440654</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1770884440654</updated>
+    </task>
+    <task id="LOCAL-00007" summary="integrated Loki for final version of monitoring">
+      <option name="closed" value="true" />
+      <created>1770886009864</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1770886009864</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -184,6 +232,10 @@
     <MESSAGE value="v1. notification-service.&#10;notification only for completed tasks" />
     <MESSAGE value="v2. notification-service.&#10;notification for completed tasks and started tasks" />
     <MESSAGE value="v2.1 notification-service.&#10;changed RestClient (task-service) to OpenFeign" />
-    <option name="LAST_COMMIT_MESSAGE" value="v2.1 notification-service.&#10;changed RestClient (task-service) to OpenFeign" />
+    <MESSAGE value="integrated MongoDB in notification-service to have history of notifications" />
+    <MESSAGE value="integrated Spring Cloud Gateway" />
+    <MESSAGE value="integrated Prometheus, Grafana and Zipkin for monitoring" />
+    <MESSAGE value="integrated Loki for final version of monitoring" />
+    <option name="LAST_COMMIT_MESSAGE" value="integrated Loki for final version of monitoring" />
   </component>
 </project>

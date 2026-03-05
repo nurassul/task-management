@@ -27,16 +27,22 @@ public class SecurityConfig {
         http
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/users/registration", "/auth/**", "/users/private/{id}").permitAll()
-                        .requestMatchers("/**").authenticated())
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(
+                                "/users/registration",
+                                "/auth/**",
+                                "/users/private/**",
+                                "/users/check-existing/**"
+                        ).permitAll()
+                        .requestMatchers("/**").authenticated()
+                )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
-
     }
 
     @Bean
     public PasswordEncoder getPasswordEncoder() {
-        return new BCryptPasswordEncoder(4);
+        return new BCryptPasswordEncoder(12);
     }
 }

@@ -1,20 +1,18 @@
 package com.project.taskservice.api.service;
 
-
 import com.project.taskservice.feign.UserClient;
-import jakarta.persistence.EntityNotFoundException;
-import task.kafka.TaskStatusChangedEvent;
-import task.model.TaskDto;
-import task.model.TaskStatus;
-import com.project.taskservice.repository.entity.TaskEntity;
 import com.project.taskservice.repository.TaskRepository;
+import com.project.taskservice.repository.entity.TaskEntity;
 import com.project.taskservice.utils.TaskMapper;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import user.model.User;
+import task.kafka.TaskStatusChangedEvent;
+import task.model.TaskDto;
+import task.model.TaskStatus;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -28,7 +26,6 @@ import java.util.Objects;
 public class TaskService {
 
     private final KafkaTemplate<Long, TaskStatusChangedEvent> kafkaTemplate;
-
     private final TaskRepository taskRepository;
     private final TaskMapper taskMapper;
     private final UserClient userClient;
@@ -47,8 +44,6 @@ public class TaskService {
                 .toList();
     }
 
-
-    // create Task
     public TaskDto createTask(TaskDto taskDtoToCreate) {
         if (taskDtoToCreate.taskStatus() != null) {
             throw new IllegalArgumentException("Status should be empty!");
@@ -58,13 +53,10 @@ public class TaskService {
         validateUserExists(taskDtoToCreate.assignedUserId());
 
         var entityToSave = taskMapper.toEntity(taskDtoToCreate);
-
         entityToSave.setTaskStatus(TaskStatus.CREATED);
         entityToSave.setCreateDateTime(LocalDate.now());
 
-        if (entityToSave.getDeadlineDate().isBefore(entityToSave.getCreateDateTime())) {
-            throw new IllegalArgumentException("Deadline date должен быть после даты создания");
-        }
+        validateDeadline(entityToSave.getDeadlineDate(), entityToSave.getCreateDateTime());
 
         var updatedEntity = taskRepository.save(entityToSave);
         return taskMapper.toDomainTask(updatedEntity);
@@ -75,45 +67,54 @@ public class TaskService {
                 .orElseThrow(() -> new NoSuchElementException("Not found Task with id= " + id));
 
         taskRepository.delete(task);
-
         log.info("Task with id= {} was deleted", id);
     }
 
     public TaskDto updateTask(Long id, TaskDto taskDtoToUpdate) {
         TaskEntity existingTask = taskRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Не найдена задача с id=" + id));
+                .orElseThrow(() -> new NoSuchElementException("Not found task with id=" + id));
 
-        if (!taskDtoToUpdate.deadlineDate().isAfter(taskDtoToUpdate.createDateTime())) {
-            throw new IllegalArgumentException("Deadline date должен быть после Create date");
+        if (taskDtoToUpdate.creatorId() == null) {
+            throw new IllegalArgumentException("creatorId is required");
         }
 
+        if (taskDtoToUpdate.deadlineDate() == null) {
+            throw new IllegalArgumentException("deadlineDate is required");
+        }
+
+        if (taskDtoToUpdate.taskStatus() == null) {
+            throw new IllegalArgumentException("taskStatus is required");
+        }
+
+        validateDeadline(taskDtoToUpdate.deadlineDate(), existingTask.getCreateDateTime());
         validateUserExists(taskDtoToUpdate.creatorId());
         validateUserExists(taskDtoToUpdate.assignedUserId());
 
+        TaskStatus currentStatus = existingTask.getTaskStatus();
+        TaskStatus requestedStatus = taskDtoToUpdate.taskStatus();
 
-        if (existingTask.getTaskStatus() == TaskStatus.DONE) {
+        validateStatusTransition(currentStatus, requestedStatus);
 
-            boolean isOnlyStatusChange = taskDtoToUpdate.taskStatus() == TaskStatus.IN_PROGRESS &&
-                    taskDtoToUpdate.createDateTime().equals(existingTask.getCreateDateTime()) &&
-                    taskDtoToUpdate.deadlineDate().equals(existingTask.getDeadlineDate()) &&
-                    Objects.equals(taskDtoToUpdate.assignedUserId(), existingTask.getAssignedUserId()) &&
-                    Objects.equals(taskDtoToUpdate.creatorId(), existingTask.getCreatorId());
+        if (currentStatus == TaskStatus.DONE) {
+            boolean isOnlyStatusChange = requestedStatus == TaskStatus.IN_PROGRESS
+                    && Objects.equals(taskDtoToUpdate.deadlineDate(), existingTask.getDeadlineDate())
+                    && Objects.equals(taskDtoToUpdate.assignedUserId(), existingTask.getAssignedUserId())
+                    && Objects.equals(taskDtoToUpdate.creatorId(), existingTask.getCreatorId());
 
-            if (isOnlyStatusChange) {
-                existingTask.setTaskStatus(TaskStatus.IN_PROGRESS);
-                existingTask.setDoneDateTime(null);
-            } else {
-                throw new IllegalStateException("Cannot modify task! status: " + existingTask.getTaskStatus());
+            if (!isOnlyStatusChange) {
+                throw new IllegalStateException("Cannot modify task! status: " + currentStatus);
             }
         } else {
             existingTask.setCreatorId(taskDtoToUpdate.creatorId());
             existingTask.setAssignedUserId(taskDtoToUpdate.assignedUserId());
-            existingTask.setTaskStatus(taskDtoToUpdate.taskStatus());
             existingTask.setDeadlineDate(taskDtoToUpdate.deadlineDate());
+        }
 
-            if (taskDtoToUpdate.taskStatus() != TaskStatus.DONE) {
-                existingTask.setDoneDateTime(null);
-            }
+        existingTask.setTaskStatus(requestedStatus);
+        if (requestedStatus == TaskStatus.DONE && currentStatus != TaskStatus.DONE) {
+            existingTask.setDoneDateTime(LocalDateTime.now());
+        } else if (requestedStatus != TaskStatus.DONE) {
+            existingTask.setDoneDateTime(null);
         }
 
         TaskEntity savedTask = taskRepository.save(existingTask);
@@ -125,33 +126,28 @@ public class TaskService {
         TaskEntity task = taskRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Not found Task with id= " + id));
 
-        if(task.getAssignedUserId() == null) {
+        if (task.getAssignedUserId() == null) {
             throw new IllegalArgumentException("Task cannot be started, assignedUserId is null!");
+        }
+
+        if (task.getTaskStatus() != TaskStatus.CREATED) {
+            throw new IllegalStateException("Only CREATED tasks can be started");
         }
 
         validateUserExists(task.getAssignedUserId());
 
         Long assignedUserId = task.getAssignedUserId();
-        int taskCount = taskRepository.countByAssignedUserIdAndTaskStatus(assignedUserId,TaskStatus.IN_PROGRESS);
+        int taskCount = taskRepository.countByAssignedUserIdAndTaskStatus(assignedUserId, TaskStatus.IN_PROGRESS);
 
-        if(taskCount >= 4) {
+        if (taskCount >= 4) {
             throw new IllegalStateException("Limit exceeded (4) with active tasks with userId= " + assignedUserId);
         }
 
+        TaskStatus oldStatus = task.getTaskStatus();
         task.setTaskStatus(TaskStatus.IN_PROGRESS);
         var savedTask = taskRepository.save(task);
 
-
-        var event = new TaskStatusChangedEvent(
-                savedTask.getId(),
-                savedTask.getCreatorId(),
-                savedTask.getAssignedUserId(),
-                task.getTaskStatus(),
-                savedTask.getTaskStatus(),
-                LocalDateTime.now()
-        );
-        kafkaTemplate.send("task-events", id, event);
-
+        sendStatusChangedEvent(savedTask, oldStatus, savedTask.getTaskStatus());
         return taskMapper.toDomainTask(savedTask);
     }
 
@@ -160,37 +156,73 @@ public class TaskService {
         TaskEntity task = taskRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Not found Task with id= " + id));
 
-        if(task.getAssignedUserId() == null || task.getDeadlineDate() == null) {
+        if (task.getAssignedUserId() == null || task.getDeadlineDate() == null) {
             throw new IllegalArgumentException("Task cannot be done!");
+        }
+
+        if (task.getTaskStatus() != TaskStatus.IN_PROGRESS) {
+            throw new IllegalStateException("Only IN_PROGRESS tasks can be completed");
         }
 
         validateUserExists(task.getAssignedUserId());
 
+        TaskStatus oldStatus = task.getTaskStatus();
         task.setTaskStatus(TaskStatus.DONE);
         task.setDoneDateTime(LocalDateTime.now());
 
         var savedTask = taskRepository.save(task);
 
-        var event = new TaskStatusChangedEvent(
-                savedTask.getId(),
-                savedTask.getCreatorId(),
-                savedTask.getAssignedUserId(),
-                task.getTaskStatus(),
-                savedTask.getTaskStatus(),
-                LocalDateTime.now()
-        );
-        kafkaTemplate.send("task-events", id, event);
-
+        sendStatusChangedEvent(savedTask, oldStatus, savedTask.getTaskStatus());
         return taskMapper.toDomainTask(savedTask);
     }
 
+    private void sendStatusChangedEvent(TaskEntity task, TaskStatus oldStatus, TaskStatus newStatus) {
+        var event = new TaskStatusChangedEvent(
+                task.getId(),
+                task.getCreatorId(),
+                task.getAssignedUserId(),
+                oldStatus,
+                newStatus,
+                LocalDateTime.now()
+        );
 
-    private void validateUserExists(Long userId) {
-        if(userId == null) {
+        kafkaTemplate.send("task-events", task.getId(), event);
+    }
+
+    private void validateDeadline(LocalDate deadlineDate, LocalDate createDate) {
+        if (deadlineDate == null) {
+            throw new IllegalArgumentException("Deadline date is required");
+        }
+
+        if (!deadlineDate.isAfter(createDate)) {
+            throw new IllegalArgumentException("Deadline date must be after create date");
+        }
+    }
+
+    private void validateStatusTransition(TaskStatus currentStatus, TaskStatus requestedStatus) {
+        if (currentStatus == requestedStatus) {
             return;
         }
 
-        User creatorUser = userClient.getUserById(userId)
-                .orElseThrow(EntityNotFoundException::new);
+        boolean isAllowed = (currentStatus == TaskStatus.CREATED && requestedStatus == TaskStatus.IN_PROGRESS)
+                || (currentStatus == TaskStatus.IN_PROGRESS && requestedStatus == TaskStatus.DONE)
+                || (currentStatus == TaskStatus.DONE && requestedStatus == TaskStatus.IN_PROGRESS);
+
+        if (!isAllowed) {
+            throw new IllegalStateException(
+                    "Unsupported status transition: " + currentStatus + " -> " + requestedStatus
+            );
+        }
+    }
+
+    private void validateUserExists(Long userId) {
+        if (userId == null) {
+            return;
+        }
+
+        Boolean exists = userClient.checkUserExisting(userId);
+        if (!Boolean.TRUE.equals(exists)) {
+            throw new EntityNotFoundException("User with id= " + userId + " not found");
+        }
     }
 }

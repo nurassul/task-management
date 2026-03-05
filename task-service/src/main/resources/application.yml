@@ -1,6 +1,9 @@
 spring:
+  application:
+    name: task-service
+
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://db:5432/postgres}
     username: ${SPRING_DATASOURCE_USERNAME}
     password: ${SPRING_DATASOURCE_PASSWORD}
   jpa:
@@ -8,10 +11,12 @@ spring:
     hibernate:
       ddl-auto: validate
     show-sql: true
+
   liquibase:
     change-log: classpath:/db/changelog/db.changelog-master.yaml
+
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS:kafka:9092}
     producer:
       key-serializer: org.apache.kafka.common.serialization.LongSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
@@ -22,5 +27,20 @@ spring:
       properties:
         spring.json.trusted.packages: "*"
 
-task-completed-topic: task.events
-notification-send-topic: notification.events
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+  zipkin:
+    tracing:
+      endpoint: "http://zipkin:9411/api/v2/spans"
+  endpoints:
+    web:
+      exposure:
+        include: health, info, prometheus
+  metrics:
+    tags:
+      application: task-service
+logging:
+  pattern:
+    level: "%d{yyyy-MM-dd HH:mm:ss} %-5level [${spring.application.name},%X{traceId:-},%X{spanId:-}] %msg%n"
