@@ -28,6 +28,9 @@ public class TaskEntity {
     @Column(name = "assigned_user_id")
     private Long assignedUserId;
 
+    @Column(name = "description_of_task")
+    private String descriptionOfTask;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "task_status", nullable = false)
     private TaskStatus taskStatus;

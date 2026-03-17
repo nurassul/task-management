@@ -7,7 +7,6 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="common" />
-        <module name="task-service" />
         <module name="notification-service" />
       </profile>
       <profile name="Annotation profile for task-project" enabled="true">
@@ -20,6 +19,7 @@
           <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.5.5.Final/mapstruct-1.5.5.Final.jar" />
         </processorPath>
         <module name="api-gateway" />
+        <module name="task-service" />
         <module name="user-service" />
       </profile>
     </annotationProcessing>
