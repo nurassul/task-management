@@ -15,10 +15,9 @@ public record TaskDto(
         @NotNull
         Long creatorId,
 
+        String descriptionOfTask,
         Long assignedUserId,
-
         TaskStatus taskStatus,
-
         LocalDate createDateTime,
 
         @NotNull

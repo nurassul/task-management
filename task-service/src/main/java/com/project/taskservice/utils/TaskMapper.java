@@ -1,43 +1,18 @@
 package com.project.taskservice.utils;
 
 
+import org.mapstruct.Mapper;
+import org.mapstruct.MappingConstants;
+import org.mapstruct.ReportingPolicy;
 import task.model.TaskDto;
 import com.project.taskservice.repository.entity.TaskEntity;
-import org.springframework.stereotype.Component;
 
-@Component
-public class TaskMapper {
 
-    public TaskDto toDomainTask(
-            TaskEntity taskEntity
-    ) {
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING,
+        unmappedTargetPolicy = ReportingPolicy.IGNORE)
+public interface TaskMapper {
 
-        return new TaskDto(
-                taskEntity.getId(),
-                taskEntity.getCreatorId(),
-                taskEntity.getAssignedUserId(),
-                taskEntity.getTaskStatus(),
-                taskEntity.getCreateDateTime(),
-                taskEntity.getDeadlineDate(),
-                taskEntity.getPriority(),
-                taskEntity.getDoneDateTime()
-        );
-    }
-
-    public TaskEntity toEntity(
-            TaskDto taskDto
-    ) {
-        return new TaskEntity(
-                taskDto.id(),
-                taskDto.creatorId(),
-                taskDto.assignedUserId(),
-                taskDto.taskStatus(),
-                taskDto.createDateTime(),
-                taskDto.deadlineDate(),
-                taskDto.priority(),
-                taskDto.doneDateTime()
-        );
-    }
-
+    TaskDto toDomainTask(TaskEntity entity);
+    TaskEntity toEntity(TaskDto user);
 
 }
