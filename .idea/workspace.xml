@@ -4,13 +4,40 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fc382bbb-f556-41da-b28b-970f2dfb0fa4" name="Changes" comment="w">
+    <list default="true" id="fc382bbb-f556-41da-b28b-970f2dfb0fa4" name="Changes" comment="adding new field for dto in task-service">
+      <change afterPath="$PROJECT_DIR$/statistics-service/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/api/controller/TaskStatisticController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/api/dto/TaskStatsDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/api/service/TaskStatisticService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/api/service/TaskStatisticServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/kafka/StatisticKafkaListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/repository/TaskStatisticRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/repository/entity/TaskStatsEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/utils/StatsInitializer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/utils/TaskStatsMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/statistics-service/src/main/resources/db/changelog/changeset/001-create-stats-table.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/statistics-service/src/main/resources/db/changelog/db.changelog-master.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/task/model/TaskDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/task/model/TaskDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/task-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task-service/src/main/java/com/project/taskservice/repository/entity/TaskEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-service/src/main/java/com/project/taskservice/repository/entity/TaskEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task-service/src/main/java/com/project/taskservice/utils/TaskMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-service/src/main/java/com/project/taskservice/utils/TaskMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/task/kafka/TaskStatusChangedEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/task/kafka/TaskEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/com/project/notificationservice/api/service/NotificationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/java/com/project/notificationservice/api/service/NotificationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/com/project/notificationservice/kafka/NotificationKafkaListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/java/com/project/notificationservice/kafka/NotificationKafkaListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/com/project/notificationservice/utils/NotificationMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/java/com/project/notificationservice/utils/NotificationMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task-service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/task-service/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task-service/src/main/java/com/project/taskservice/api/service/TaskService.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-service/src/main/java/com/project/taskservice/api/service/TaskService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/task-service/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task-service/src/main/resources/db/changelog/changeset/001-create-tasks-table.sql" beforeDir="false" afterPath="$PROJECT_DIR$/task-service/src/main/resources/db/changelog/changeset/001-create-tasks-table.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,8 +50,9 @@
         <option value="Record" />
         <option value="Enum" />
         <option value="Interface" />
-        <option value="Class" />
         <option value="Dockerfile" />
+        <option value="Class" />
+        <option value="com.haulmont.ampjpb.JpaLiquibaseChangeLog" />
       </list>
     </option>
   </component>
@@ -63,40 +91,43 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;api-gateway&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/paind/task-management/user-service/src/main/resources&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
-    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "statistic-service",
+    "junie.onboarding.icon.badge.shown": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/paind/task-management/user-service",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "run.configurations.included.in.services": "true",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "to.speed.mode.migration.done": "true",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;mongo&quot;,
-      &quot;postgresql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mongo",
+      "postgresql"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\paind\task-management\user-service\src\main\resources" />
-      <recent name="C:\Users\paind\task-management\task-service\src\main\resources" />
-      <recent name="C:\Users\paind\task-management\notification-service\src\main\resources" />
+      <recent name="C:\Users\paind\task-management\user-service" />
+      <recent name="C:\Users\paind\task-management\task-service" />
+      <recent name="C:\Users\paind\task-management\api-gateway" />
+      <recent name="C:\Users\paind\task-management\notification-service" />
+      <recent name="C:\Users\paind\task-management\statistics-service" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -120,6 +151,13 @@
     <configuration name="NotificationServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="notification-service" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.project.notificationservice.NotificationServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="StatisticsServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="statistics-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.project.statisticsservice.StatisticsServiceApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -171,6 +209,8 @@
       <workItem from="1772530416801" duration="662000" />
       <workItem from="1773307592795" duration="3389000" />
       <workItem from="1773750862318" duration="2019000" />
+      <workItem from="1773917210349" duration="1501000" />
+      <workItem from="1774001479406" duration="24382000" />
     </task>
     <task id="LOCAL-00001" summary="v1. notification-service.&#10;notification only for completed tasks">
       <option name="closed" value="true" />
@@ -243,5 +283,16 @@
     <MESSAGE value="integrated Prometheus, Grafana and Zipkin for monitoring" />
     <MESSAGE value="integrated Loki for final version of monitoring" />
     <option name="LAST_COMMIT_MESSAGE" value="integrated Loki for final version of monitoring" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/user-service/src/main/java/com/project/userservice/security/jwt/JwtService.java</url>
+          <line>37</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

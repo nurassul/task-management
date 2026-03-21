@@ -19,6 +19,7 @@
         <module>task-service</module>
         <module>notification-service</module>
         <module>api-gateway</module>
+        <module>statistics-service</module>
     </modules>
 
     <properties>

@@ -1,15 +1,19 @@
 package task.kafka;
 
+import task.model.Priority;
 import task.model.TaskStatus;
 
 import java.time.LocalDateTime;
 
-public record TaskStatusChangedEvent(
+public record TaskEvent(
         Long taskId,
         Long creatorId,
         Long assignedUserId,
         TaskStatus oldStatus,
         TaskStatus newStatus,
-        LocalDateTime timestamp
+        Priority oldTaskPriority,
+        Priority newTaskPriority,
+        LocalDateTime timestamp,
+        boolean isDeleted
 ) {
 }
