@@ -11,6 +11,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import task.kafka.TaskEvent;
+import task.kafka.TaskEventType;
 import task.model.Priority;
 import task.model.TaskDto;
 import task.model.TaskStatus;
@@ -45,6 +46,10 @@ public class TaskService {
                 .toList();
     }
 
+    /*
+            CREATING TASK
+        !!!EVENT TYPE - CREATED!!!
+     */
     public TaskDto createTask(TaskDto taskDtoToCreate) {
         if (taskDtoToCreate.taskStatus() != null) {
             throw new IllegalArgumentException("Status should be empty!");
@@ -60,10 +65,14 @@ public class TaskService {
         validateDeadline(entityToSave.getDeadlineDate(), entityToSave.getCreateDateTime());
 
         var updatedEntity = taskRepository.save(entityToSave);
-        sendTaskEvent(updatedEntity, null, null);
+        sendTaskEvent(updatedEntity, null, null, TaskEventType.CREATED);
         return taskMapper.toDomainTask(updatedEntity);
     }
 
+    /*
+            DELETING TASK
+         EVENT TYPE - DELETED
+    */
     public void deleteTask(Long id) {
         TaskEntity task = taskRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Not found Task with id= " + id));
@@ -73,6 +82,10 @@ public class TaskService {
         log.info("Task with id= {} was deleted", id);
     }
 
+    /*
+                UPDATING TASK
+             EVENT TYPE - UPDATED
+     */
     public TaskDto updateTask(Long id, TaskDto taskDtoToUpdate) {
         TaskEntity existingTask = taskRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Not found task with id=" + id));
@@ -125,10 +138,14 @@ public class TaskService {
         }
 
         TaskEntity savedTask = taskRepository.save(existingTask);
-        sendTaskEvent(savedTask,oldStatus,oldPriority);
+        sendTaskEvent(savedTask, oldStatus, oldPriority, TaskEventType.UPDATED);
         return taskMapper.toDomainTask(savedTask);
     }
 
+    /*
+                UPDATING TASK
+             EVENT TYPE - UPDATED
+     */
     @Transactional
     public TaskDto startTask(Long id) {
         TaskEntity task = taskRepository.findById(id)
@@ -156,10 +173,14 @@ public class TaskService {
         task.setTaskStatus(TaskStatus.IN_PROGRESS);
         var savedTask = taskRepository.save(task);
 
-        sendTaskEvent(savedTask, oldStatus, oldPriority);
+        sendTaskEvent(savedTask, oldStatus, oldPriority, TaskEventType.UPDATED);
         return taskMapper.toDomainTask(savedTask);
     }
 
+    /*
+                UPDATING TASK
+             EVENT TYPE - UPDATED
+     */
     @Transactional
     public TaskDto completeTask(Long id) {
         TaskEntity task = taskRepository.findById(id)
@@ -182,7 +203,7 @@ public class TaskService {
 
         var savedTask = taskRepository.save(task);
 
-        sendTaskEvent(savedTask, oldStatus, oldPriority);
+        sendTaskEvent(savedTask, oldStatus, oldPriority, TaskEventType.UPDATED);
         return taskMapper.toDomainTask(savedTask);
     }
 
@@ -196,12 +217,12 @@ public class TaskService {
                 task.getPriority(),
                 null,
                 LocalDateTime.now(),
-                true
+                TaskEventType.DELETED
         );
         kafkaTemplate.send("task-events", task.getId(), event);
     }
 
-    private void sendTaskEvent(TaskEntity task, TaskStatus oldStatus, Priority oldPriority) {
+    private void sendTaskEvent(TaskEntity task, TaskStatus oldStatus, Priority oldPriority, TaskEventType eventType) {
         var event = new TaskEvent(
                 task.getId(),
                 task.getCreatorId(),
@@ -211,7 +232,7 @@ public class TaskService {
                 oldPriority,
                 task.getPriority(),
                 LocalDateTime.now(),
-                false
+                eventType
         );
 
         kafkaTemplate.send("task-events", task.getId(), event);

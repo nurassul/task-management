@@ -1,7 +1,7 @@
-package com.project.statisticsservice.api.service;
+package com.project.statisticsservice.api.service.taskapi;
 
 
-import com.project.statisticsservice.api.dto.TaskStatsDto;
+import com.project.statisticsservice.api.dto.task.TaskStatsDto;
 import com.project.statisticsservice.repository.TaskStatisticRepository;
 import com.project.statisticsservice.repository.entity.TaskStatsEntity;
 import com.project.statisticsservice.utils.TaskStatsMapper;
@@ -10,12 +10,13 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import task.kafka.TaskEvent;
+import task.kafka.TaskEventType;
 import task.model.Priority;
 import task.model.TaskStatus;
 
 @RequiredArgsConstructor
 @Service
-public class TaskStatisticServiceImpl implements TaskStatisticService{
+public class TaskStatisticServiceImpl implements TaskStatisticService {
 
     private final TaskStatisticRepository repository;
     private final TaskStatsMapper mapper;
@@ -25,31 +26,37 @@ public class TaskStatisticServiceImpl implements TaskStatisticService{
     @Override
     public void processEvent(TaskEvent event) {
         // 1. Логика по СТАТУСАМ
-        if(event.isDeleted()){
+        if (event.eventType().equals(TaskEventType.DELETED)) {
             repository.decrementTotalCreated();
             decrementStatus(event.oldStatus());
             decrementPriority(event.oldTaskPriority());
             return;
         }
 
-        if (event.oldStatus() == null) {
-            // Новая задача
-            repository.incrementTotalCreated();
-        } else if (!event.oldStatus().equals(event.newStatus())) {
-            // Статус изменился -> отнимаем у старого, прибавляем новому
-            decrementStatus(event.oldStatus());
-        }
+        switch (event.eventType()) {
 
-        if (event.oldStatus() == null || !event.oldStatus().equals(event.newStatus())) {
-            incrementStatus(event.newStatus());
-        }
+            case CREATED -> {
+                repository.incrementTotalCreated();
+            }
 
-        // 2. Логика по ПРИОРИТЕТАМ
-        if (event.oldTaskPriority() != null && !event.oldTaskPriority().equals(event.newTaskPriority())) {
-            decrementPriority(event.oldTaskPriority());
-        }
-        if (event.oldTaskPriority() == null || !event.oldTaskPriority().equals(event.newTaskPriority())) {
-            incrementPriority(event.newTaskPriority());
+            case UPDATED -> {
+                // STATUS
+                if (!event.oldStatus().equals(event.newStatus())) {
+                    decrementStatus(event.oldStatus());
+                }
+                if (event.oldStatus() == null || !event.oldStatus().equals(event.newStatus())) {
+                    incrementStatus(event.newStatus());
+                }
+
+                // PRIORITY
+                if (event.oldTaskPriority() != null && !event.oldTaskPriority().equals(event.newTaskPriority())) {
+                    decrementPriority(event.oldTaskPriority());
+                }
+                if (event.oldTaskPriority() == null || !event.oldTaskPriority().equals(event.newTaskPriority())) {
+                    incrementPriority(event.newTaskPriority());
+                }
+            }
+
         }
     }
 

@@ -1,4 +1,4 @@
-package com.project.statisticsservice.api.dto;
+package com.project.statisticsservice.api.dto.task;
 
 import lombok.*;
 

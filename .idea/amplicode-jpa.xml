@@ -4,6 +4,7 @@
     <option name="liquibaseDirectory" value="db/changelog" />
     <option name="defaultUnitInitialized" value="true" />
     <option name="renamerInitialized" value="true" />
+    <option name="newEntityIdStrategy" value="Identity" />
     <option name="includeToChangelogDirectory" value="user-service/src/main/resources/db/changelog/db.changelog-master.yaml" />
   </component>
 </project>

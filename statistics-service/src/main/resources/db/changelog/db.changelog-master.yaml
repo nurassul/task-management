@@ -1,3 +1,5 @@
 databaseChangeLog:
   - include:
       file: db/changelog/changeset/001-create-stats-table.sql
+  - include:
+      file: db/changelog/changeset/001-create-user-stats-table.sql

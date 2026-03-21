@@ -4,40 +4,27 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fc382bbb-f556-41da-b28b-970f2dfb0fa4" name="Changes" comment="adding new field for dto in task-service">
-      <change afterPath="$PROJECT_DIR$/statistics-service/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/api/controller/TaskStatisticController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/api/dto/TaskStatsDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/api/service/TaskStatisticService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/api/service/TaskStatisticServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/kafka/StatisticKafkaListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/repository/TaskStatisticRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/repository/entity/TaskStatsEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/utils/StatsInitializer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/utils/TaskStatsMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/statistics-service/src/main/resources/db/changelog/changeset/001-create-stats-table.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/statistics-service/src/main/resources/db/changelog/db.changelog-master.yaml" afterDir="false" />
+    <list default="true" id="fc382bbb-f556-41da-b28b-970f2dfb0fa4" name="Changes" comment="statistic-service v1.0&#10;statistic for Task fist version.">
+      <change afterPath="$PROJECT_DIR$/common/src/main/java/task/kafka/TaskEventType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/api/controller/UserStatisticController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/api/dto/user/UserStatsDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/api/service/userapi/UserStatisticService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/api/service/userapi/UserStatisticServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/repository/UserStatisticRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/repository/entity/UserStatsEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/utils/UserStatsMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/statistics-service/src/main/resources/db/changelog/changeset/001-create-user-stats-table.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/task/kafka/TaskStatusChangedEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/task/kafka/TaskEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification-service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/com/project/notificationservice/api/service/NotificationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/java/com/project/notificationservice/api/service/NotificationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/com/project/notificationservice/kafka/NotificationKafkaListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/java/com/project/notificationservice/kafka/NotificationKafkaListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/com/project/notificationservice/utils/NotificationMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/java/com/project/notificationservice/utils/NotificationMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task-service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/task-service/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/task/kafka/TaskEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/task/kafka/TaskEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/api/controller/TaskStatisticController.java" beforeDir="false" afterPath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/api/controller/TaskStatisticController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/api/dto/TaskStatsDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/api/dto/task/TaskStatsDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/api/service/TaskStatisticService.java" beforeDir="false" afterPath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/api/service/taskapi/TaskStatisticService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/api/service/TaskStatisticServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/api/service/taskapi/TaskStatisticServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/kafka/StatisticKafkaListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/kafka/StatisticKafkaListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/repository/TaskStatisticRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/repository/TaskStatisticRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/utils/TaskStatsMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/utils/TaskStatsMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/statistics-service/src/main/resources/db/changelog/db.changelog-master.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/statistics-service/src/main/resources/db/changelog/db.changelog-master.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/task-service/src/main/java/com/project/taskservice/api/service/TaskService.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-service/src/main/java/com/project/taskservice/api/service/TaskService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/task-service/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task-service/src/main/resources/db/changelog/changeset/001-create-tasks-table.sql" beforeDir="false" afterPath="$PROJECT_DIR$/task-service/src/main/resources/db/changelog/changeset/001-create-tasks-table.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,11 +35,11 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Record" />
+        <option value="Dockerfile" />
+        <option value="com.haulmont.ampjpb.JpaLiquibaseChangeLog" />
         <option value="Enum" />
         <option value="Interface" />
-        <option value="Dockerfile" />
         <option value="Class" />
-        <option value="com.haulmont.ampjpb.JpaLiquibaseChangeLog" />
       </list>
     </option>
   </component>
@@ -210,7 +197,7 @@
       <workItem from="1773307592795" duration="3389000" />
       <workItem from="1773750862318" duration="2019000" />
       <workItem from="1773917210349" duration="1501000" />
-      <workItem from="1774001479406" duration="24382000" />
+      <workItem from="1774001479406" duration="32010000" />
     </task>
     <task id="LOCAL-00001" summary="v1. notification-service.&#10;notification only for completed tasks">
       <option name="closed" value="true" />
@@ -268,7 +255,15 @@
       <option name="project" value="LOCAL" />
       <updated>1770886009864</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="statistic-service v1.0&#10;statistic for Task fist version.">
+      <option name="closed" value="true" />
+      <created>1774079309926</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1774079309926</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -282,7 +277,8 @@
     <MESSAGE value="integrated Spring Cloud Gateway" />
     <MESSAGE value="integrated Prometheus, Grafana and Zipkin for monitoring" />
     <MESSAGE value="integrated Loki for final version of monitoring" />
-    <option name="LAST_COMMIT_MESSAGE" value="integrated Loki for final version of monitoring" />
+    <MESSAGE value="statistic-service v1.0&#10;statistic for Task fist version." />
+    <option name="LAST_COMMIT_MESSAGE" value="statistic-service v1.0&#10;statistic for Task fist version." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
