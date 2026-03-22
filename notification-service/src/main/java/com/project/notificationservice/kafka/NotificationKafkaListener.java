@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
-import task.kafka.TaskStatusChangedEvent;
+import task.kafka.TaskEvent;
 import user.model.User;
 
 @Component
@@ -20,7 +20,7 @@ public class NotificationKafkaListener {
     private final NotificationService notificationService;
 
     @KafkaListener(topics = "task-events", groupId = "notification-group")
-    public void handleStatusChange(TaskStatusChangedEvent event) {
+    public void handleStatusChange(TaskEvent event) {
         log.info("Received event: {}", event);
 
         if (event.assignedUserId() == null) {

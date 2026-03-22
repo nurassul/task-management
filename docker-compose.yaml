@@ -160,6 +160,26 @@ services:
       SPRING_MAIL_PASSWORD: ${GMAIL_PASSWORD}
       SPRING_DATA_MONGODB_URI: mongodb://root:root@mongo:27017/notifications?authSource=admin
 
+  # statistics-service for making stats about tasks
+  statistics-service:
+    build:
+      context: .
+      dockerfile: statistics-service/Dockerfile
+    container_name: statistics-service
+    depends_on:
+      zipkin:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+    networks:
+      - app-network
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/${DB_uNAME}
+      SPRING_DATASOURCE_USERNAME: ${DB_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+
+
   # entry-point for all services
   api-gateway:
     build:

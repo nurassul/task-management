@@ -8,6 +8,7 @@ COPY user-service/pom.xml user-service/
 COPY task-service/pom.xml task-service/
 COPY notification-service/pom.xml notification-service/
 COPY api-gateway/pom.xml api-gateway/
+COPY statistics-service/pom.xml statistics-service/
 
 RUN mvn dependency:go-offline -B
 
@@ -16,6 +17,7 @@ COPY user-service/src ./user-service/src
 COPY task-service/src ./task-service/src
 COPY notification-service/src ./notification-service/src
 COPY api-gateway/src ./api-gateway/src
+COPY statistics-service/src ./statistics-service/src
 
 RUN mvn clean package -pl :task-service -am -DskipTests -B
 

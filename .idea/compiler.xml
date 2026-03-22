@@ -21,6 +21,7 @@
         <module name="api-gateway" />
         <module name="task-service" />
         <module name="user-service" />
+        <module name="statistics-service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -32,6 +33,7 @@
       <module name="api-gateway" options="-parameters" />
       <module name="common" options="-parameters" />
       <module name="notification-service" options="-parameters" />
+      <module name="statistics-service" options="-parameters" />
       <module name="task-service" options="-parameters" />
       <module name="user-service" options="-parameters" />
     </option>

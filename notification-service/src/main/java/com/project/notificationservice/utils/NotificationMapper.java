@@ -3,12 +3,12 @@ package com.project.notificationservice.utils;
 
 import com.project.notificationservice.api.mongodb.NotificationLog;
 import org.springframework.stereotype.Component;
-import task.kafka.TaskStatusChangedEvent;
+import task.kafka.TaskEvent;
 
 @Component
 public class NotificationMapper {
 
-    public NotificationLog eventToEntity(TaskStatusChangedEvent event) {
+    public NotificationLog eventToEntity(TaskEvent event) {
         return NotificationLog.builder()
                 .taskId(event.taskId())
                 .creatorId(event.creatorId())
