@@ -5,7 +5,6 @@ import com.project.statisticsservice.api.dto.user.UserStatsDto;
 import com.project.statisticsservice.repository.UserStatisticRepository;
 import com.project.statisticsservice.repository.entity.UserStatsEntity;
 import com.project.statisticsservice.utils.UserStatsMapper;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import task.kafka.TaskEvent;
@@ -46,8 +45,10 @@ public class UserStatisticServiceImpl implements UserStatisticService {
 
     @Override
     public UserStatsDto getUserStatsById(Long userId) {
+        ensureUserExists(userId);
+
         UserStatsEntity userStatsEntity = repository.findByUserId(userId)
-                .orElseThrow(EntityNotFoundException::new);
+                .orElseThrow(() -> new IllegalStateException("Cannot initialize user stats for userId= " + userId));
 
         return mapper.toDomainTask(userStatsEntity);
     }

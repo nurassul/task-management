@@ -4,27 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fc382bbb-f556-41da-b28b-970f2dfb0fa4" name="Changes" comment="statistic-service v1.0&#10;statistic for Task fist version.">
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/task/kafka/TaskEventType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/api/controller/UserStatisticController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/api/dto/user/UserStatsDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/api/service/userapi/UserStatisticService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/api/service/userapi/UserStatisticServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/repository/UserStatisticRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/repository/entity/UserStatsEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/utils/UserStatsMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/statistics-service/src/main/resources/db/changelog/changeset/001-create-user-stats-table.sql" afterDir="false" />
+    <list default="true" id="fc382bbb-f556-41da-b28b-970f2dfb0fa4" name="Changes" comment="statistic-service v2.0&#10;statistic for User second version. Final">
       <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/task/kafka/TaskEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/task/kafka/TaskEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/api/controller/TaskStatisticController.java" beforeDir="false" afterPath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/api/controller/TaskStatisticController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/api/dto/TaskStatsDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/api/dto/task/TaskStatsDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/api/service/TaskStatisticService.java" beforeDir="false" afterPath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/api/service/taskapi/TaskStatisticService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/api/service/TaskStatisticServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/api/service/taskapi/TaskStatisticServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/kafka/StatisticKafkaListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/kafka/StatisticKafkaListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/repository/TaskStatisticRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/repository/TaskStatisticRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/utils/TaskStatsMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/utils/TaskStatsMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/statistics-service/src/main/resources/db/changelog/db.changelog-master.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/statistics-service/src/main/resources/db/changelog/db.changelog-master.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task-service/src/main/java/com/project/taskservice/api/service/TaskService.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-service/src/main/java/com/project/taskservice/api/service/TaskService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/api/service/taskapi/TaskStatisticServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/api/service/taskapi/TaskStatisticServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/api/service/userapi/UserStatisticServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/api/service/userapi/UserStatisticServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,12 +83,13 @@
     "run.configurations.included.in.services": "true",
     "settings.editor.selected.configurable": "preferences.lookFeel",
     "to.speed.mode.migration.done": "true",
+    "ts.external.directory.path": "C:\\Users\\paind\\AppData\\Roaming\\JetBrains\\IntelliJIdea2025.2\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
     "DatabaseDriversLRU": [
-      "mongo",
-      "postgresql"
+      "postgresql",
+      "mongo"
     ]
   }
 }]]></component>
@@ -197,7 +182,7 @@
       <workItem from="1773307592795" duration="3389000" />
       <workItem from="1773750862318" duration="2019000" />
       <workItem from="1773917210349" duration="1501000" />
-      <workItem from="1774001479406" duration="32010000" />
+      <workItem from="1774001479406" duration="40198000" />
     </task>
     <task id="LOCAL-00001" summary="v1. notification-service.&#10;notification only for completed tasks">
       <option name="closed" value="true" />
@@ -263,7 +248,15 @@
       <option name="project" value="LOCAL" />
       <updated>1774079309926</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="statistic-service v2.0&#10;statistic for User second version. Final">
+      <option name="closed" value="true" />
+      <created>1774093957084</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1774093957084</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -278,7 +271,8 @@
     <MESSAGE value="integrated Prometheus, Grafana and Zipkin for monitoring" />
     <MESSAGE value="integrated Loki for final version of monitoring" />
     <MESSAGE value="statistic-service v1.0&#10;statistic for Task fist version." />
-    <option name="LAST_COMMIT_MESSAGE" value="statistic-service v1.0&#10;statistic for Task fist version." />
+    <MESSAGE value="statistic-service v2.0&#10;statistic for User second version. Final" />
+    <option name="LAST_COMMIT_MESSAGE" value="statistic-service v2.0&#10;statistic for User second version. Final" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

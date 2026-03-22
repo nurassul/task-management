@@ -37,6 +37,14 @@ public class TaskStatisticServiceImpl implements TaskStatisticService {
 
             case CREATED -> {
                 repository.incrementTotalCreated();
+
+                // PRIORITY
+                if (event.oldTaskPriority() != null && !event.oldTaskPriority().equals(event.newTaskPriority())) {
+                    decrementPriority(event.oldTaskPriority());
+                }
+                if (event.oldTaskPriority() == null || !event.oldTaskPriority().equals(event.newTaskPriority())) {
+                    incrementPriority(event.newTaskPriority());
+                }
             }
 
             case UPDATED -> {
