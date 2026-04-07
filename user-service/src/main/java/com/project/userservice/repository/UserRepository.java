@@ -28,4 +28,5 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     void setStatus(
             @Param("id") Long id,
             @Param("status") UserStatus status);
+
 }

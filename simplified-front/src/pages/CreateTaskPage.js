@@ -158,7 +158,7 @@ function CreateTaskPage() {
               name="assignedUserId"
               type="number"
               min="1"
-              placeholder="Optional"
+              placeholder="Mandatory"
               value={form.assignedUserId}
               onChange={handleChange}
             />

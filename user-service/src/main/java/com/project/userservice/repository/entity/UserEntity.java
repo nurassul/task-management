@@ -2,13 +2,10 @@ package com.project.userservice.repository.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
 import user.model.Role;
 import user.model.UserStatus;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.time.LocalDateTime;
 
@@ -16,6 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Setter
 @Getter
+@Builder
 @Entity
 @Table(name = "users")
 public class UserEntity {

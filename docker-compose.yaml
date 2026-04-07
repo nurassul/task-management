@@ -95,6 +95,13 @@ services:
     depends_on:
       - mongo
 
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+    networks:
+      - app-network
 
   # --- MICROSERVICES ---
 
@@ -130,6 +137,8 @@ services:
         condition: service_healthy
       zipkin:
         condition: service_healthy
+      redis:
+        condition: service_started
     networks:
       - app-network
     environment:
