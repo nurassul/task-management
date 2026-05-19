@@ -215,14 +215,3 @@ Consumers:
 - `statistics-service` updates global and per-user counters
 - `notification-service` sends notifications and stores event logs in MongoDB
 
-## What to Improve Next (Portfolio Hardening)
-
-- Add focused integration tests for auth/task/stats flow
-- Restrict internal user endpoints for service-to-service calls only
-- Remove secrets from tracked files and rotate credentials
-- Add request/response examples in README (curl or Postman collection)
-- Add k8s deployment notes (you already have `k8s/` manifests)
-
----
-
-If you use this as a portfolio project, show one "hardening" pull request with security fixes and tests. This makes the project look much more mature than a simple feature-only demo.
