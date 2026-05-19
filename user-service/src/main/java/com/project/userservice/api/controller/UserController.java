@@ -7,7 +7,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -103,8 +105,21 @@ public class UserController {
     @PutMapping("/{id}")
     public ResponseEntity<User> updateUser(
             @PathVariable("id") Long id,
-            @RequestBody User userToUpdate
-    ) {
+            @RequestBody User userToUpdate,
+            Authentication auth
+    ) throws ChangeSetPersister.NotFoundException {
+        boolean isAdmin = auth.getAuthorities().stream()
+                        .anyMatch(a -> "ROLE_ADMIN".equals(a.getAuthority()));
+
+        if(!isAdmin) {
+            String currentEmail = auth.getName();
+            User currentUser = userService.getUserByEmail(currentEmail);
+
+            if(!id.equals(currentUser.getId())){
+                throw new AccessDeniedException("You can update only your ouwn profile!");
+            }
+        }
+
         log.info("Called updateUser(): id={}", id);
 
         var updatedUser = userService.updateUser(id, userToUpdate);

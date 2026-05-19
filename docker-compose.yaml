@@ -12,7 +12,7 @@ services:
       POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     ports:
-      - "5433:5432"
+      - "127.0.0.1:5432:5432"
     networks:
       - app-network
     volumes:
@@ -95,13 +95,13 @@ services:
     depends_on:
       - mongo
 
-  redis:
-    image: redis:7-alpine
-    ports:
-      - "6379:6379"
-    restart: unless-stopped
-    networks:
-      - app-network
+#  redis:
+#    image: redis:7-alpine
+#    ports:
+#      - "6379:6379"
+#    restart: unless-stopped
+#    networks:
+#      - app-network
 
   # --- MICROSERVICES ---
 

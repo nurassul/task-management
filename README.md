@@ -1,32 +1,125 @@
-# Task Management System
+# Task Management Platform
 
-Microservice-based project for task management with authentication, admin functions, statistics, notifications, and a simple React frontend for API testing.
+Microservice-based task management platform with JWT auth, task lifecycle, event-driven statistics, notifications, and a lightweight React UI for manual testing.
 
-## What is inside
+## Highlights
 
-- `api-gateway` - single entry point for client requests.
-- `user-service` - registration, auth (JWT), user profile, admin user operations.
-- `task-service` - CRUD and lifecycle for tasks.
-- `statistics-service` - aggregated task/user statistics from Kafka events.
-- `notification-service` - notification processing from Kafka.
-- `simplified-front` - simple test frontend for quick API verification (login, registration, dashboard, profile, create task, admin panel).
-- `common` - shared models/events between services.
+- Microservice architecture with a single API entry point (`api-gateway`)
+- JWT authentication and role-based access (`ROLE_USER`, `ROLE_ADMIN`)
+- Task lifecycle: create, update, start, complete, delete
+- Event-driven integration via Kafka
+- Aggregated statistics service (global and per-user)
+- Notification service with MongoDB log storage
+- Observability stack: Prometheus, Grafana, Zipkin, Loki
 
-## Tech stack
+## Architecture
 
-- Java 21, Spring Boot 3, Spring Cloud Gateway
-- PostgreSQL, MongoDB
-- Kafka
+```mermaid
+flowchart LR
+    UI["React UI\n(simplified-front)"] --> GW["API Gateway"]
+
+    GW --> US["user-service"]
+    GW --> TS["task-service"]
+    GW --> SS["statistics-service"]
+
+    TS -->|"validate user via Feign"| US
+
+    TS -->|"TaskEvent"| K["Kafka"]
+    K --> NS["notification-service"]
+    K --> SS
+
+    US --> UDB[("PostgreSQL\nuser-db")]
+    TS --> TDB[("PostgreSQL\ntask-db")]
+    SS --> SDB[("PostgreSQL\nuser-db")]
+    NS --> MDB[("MongoDB")]
+
+    TS --> R[("Redis cache")]
+
+    TS --> Z["Zipkin"]
+    US --> Z
+    SS --> Z
+    NS --> Z
+    GW --> Z
+```
+
+## Services
+
+| Service | Responsibility | Storage / Integration |
+|---|---|---|
+| `api-gateway` | Single entry point, request routing, CORS | Spring Cloud Gateway |
+| `user-service` | Registration, JWT auth, user management | PostgreSQL (`user-db`) |
+| `task-service` | Task CRUD + lifecycle + business rules | PostgreSQL (`task-db`), Redis, Kafka |
+| `statistics-service` | Global and per-user task analytics | PostgreSQL (`user-db`), Kafka |
+| `notification-service` | Sends notifications and stores notification logs | Kafka, MongoDB, SMTP |
+| `common` | Shared DTO/models/events | Maven module |
+| `simplified-front` | Minimal React UI for API checks | Uses gateway API |
+
+## Tech Stack
+
+### Backend
+
+- Java 21
+- Spring Boot 3
+- Spring Cloud Gateway
+- Spring Data JPA
+- Spring Validation
+- Spring Security + JWT
+- OpenFeign
+
+### Data & Messaging
+
+- PostgreSQL 15
+- MongoDB
+- Redis
+- Apache Kafka (KRaft)
 - Liquibase
+
+### Observability
+
+- Micrometer
+- Prometheus
+- Grafana
+- Zipkin
+- Loki
+
+### Infra & Dev
+
+- Docker / Docker Compose
+- Maven (multi-module)
+
+### Frontend (test UI)
+
 - React
-- Docker Compose
-- Observability: Prometheus, Grafana, Zipkin, Loki
+- React Router
+- Tailwind
 
-## Quick start
+## Project Structure
 
-### 1. Prepare `.env`
+```text
+task-management/
+|- api-gateway/
+|- common/
+|- db-init/
+|- k8s/
+|- notification-service/
+|- simplified-front/
+|- statistics-service/
+|- task-service/
+|- user-service/
+|- docker-compose.yaml
+|- pom.xml
+`- README.md
+```
 
-Root `.env` should contain:
+## Prerequisites
+
+- Docker + Docker Compose
+- Optional for local run (without Docker): Java 21, Maven
+- Optional for frontend: Node.js 20+
+
+## Configuration
+
+Create root `.env`:
 
 ```env
 DB_USERNAME=postgres
@@ -37,13 +130,32 @@ GMAIL_USER=your_email@gmail.com
 GMAIL_PASSWORD=your_app_password
 ```
 
-### 2. Start all services
+Frontend env (`simplified-front/.env`):
 
-```bash
-docker compose up -d --build
+```env
+PORT=3001
+REACT_APP_API_BASE_URL=http://localhost:8080
 ```
 
-### 3. Open frontend
+## Run with Docker Compose
+
+```bash
+docker compose up --build -d
+```
+
+Check containers:
+
+```bash
+docker compose ps
+```
+
+Stop:
+
+```bash
+docker compose down
+```
+
+## Run Frontend
 
 ```bash
 cd simplified-front
@@ -51,30 +163,29 @@ npm install
 npm start
 ```
 
-Frontend is configured to run on `http://localhost:3001` and use gateway `http://localhost:8080`.
-
 ## Main URLs
 
-- API Gateway: `http://localhost:8080`
+- Gateway: `http://localhost:8080`
 - Frontend: `http://localhost:3001`
 - Grafana: `http://localhost:3000`
 - Prometheus: `http://localhost:9090`
 - Zipkin: `http://localhost:9411`
 - Mongo Express: `http://localhost:8085`
 
-## API routes (via Gateway)
+## API Overview (via Gateway)
 
 Base URL: `http://localhost:8080`
 
-### Auth/User
+### Auth / Users
 
 - `POST /auth/sign-in`
 - `POST /auth/refresh`
 - `POST /users/registration`
-- `GET /users/email/{email}` (auth required)
-- `PUT /users/{id}` (auth required)
+- `GET /users/{id}`
+- `PUT /users/{id}`
+- `GET /users/email/{email}`
 
-### Admin-only (ROLE_ADMIN)
+Admin routes:
 
 - `GET /users`
 - `POST /users/{id}/banUser`
@@ -95,50 +206,23 @@ Base URL: `http://localhost:8080`
 - `GET /stats/task`
 - `GET /stats/user/{userId}`
 
-## Frontend pages
+## Event Flow
 
-- `/login`
-- `/register`
-- `/dashboard`
-- `/tasks/new`
-- `/statistics`
-- `/profile`
-- `/admin/users` (ROLE_ADMIN only)
+`task-service` publishes `TaskEvent` to Kafka topic `task-events`.
 
-## How to create an admin user
+Consumers:
 
-Registration creates users with `ROLE_USER` by default.
+- `statistics-service` updates global and per-user counters
+- `notification-service` sends notifications and stores event logs in MongoDB
 
-1. Register normally through `/users/registration`.
-2. Promote role in DB:
+## What to Improve Next (Portfolio Hardening)
 
-```bash
-docker exec -it postgresdb psql -U postgres -d "user-db" -c "UPDATE users SET role='ROLE_ADMIN' WHERE email='admin@example.com';"
-```
+- Add focused integration tests for auth/task/stats flow
+- Restrict internal user endpoints for service-to-service calls only
+- Remove secrets from tracked files and rotate credentials
+- Add request/response examples in README (curl or Postman collection)
+- Add k8s deployment notes (you already have `k8s/` manifests)
 
-3. Re-login to receive JWT with `ROLE_ADMIN`.
+---
 
-## Useful commands
-
-### Rebuild one service
-
-```bash
-docker compose up -d --build statistics-service
-```
-
-### Show container status
-
-```bash
-docker compose ps
-```
-
-### Stop project
-
-```bash
-docker compose down
-```
-
-## Notes
-
-- Statistics are event-driven (Kafka), so small delay after task updates is expected.
-- If user stats are empty for a new user, service initializes zero stats automatically.
+If you use this as a portfolio project, show one "hardening" pull request with security fixes and tests. This makes the project look much more mature than a simple feature-only demo.
