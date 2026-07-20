@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import task.kafka.TaskEvent;
 import task.kafka.TaskEventType;
-import task.model.Priority;
+import task.model.TaskPriority;
 import task.model.TaskStatus;
 
 @RequiredArgsConstructor
@@ -93,7 +93,7 @@ public class TaskStatisticServiceImpl implements TaskStatisticService {
         }
     }
 
-    private void incrementPriority(Priority priority) {
+    private void incrementPriority(TaskPriority priority) {
         if (priority == null) return;
         switch (priority) {
             case LOW -> repository.incrementLowPriorityCount();
@@ -102,7 +102,7 @@ public class TaskStatisticServiceImpl implements TaskStatisticService {
         }
     }
 
-    private void decrementPriority(Priority priority) {
+    private void decrementPriority(TaskPriority priority) {
         if (priority == null) return;
         switch (priority) {
             case LOW -> repository.decrementLowPriorityCount();

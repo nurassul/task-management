@@ -1,7 +1,6 @@
 package com.project.userservice.repository.entity;
 
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import user.model.Role;
 import user.model.UserStatus;
@@ -35,10 +34,6 @@ public class UserEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "user_status", nullable = false)
     private UserStatus userStatus;
-
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @Column(name = "password")
-    private String password;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)

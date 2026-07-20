@@ -4,7 +4,6 @@ import com.project.userservice.api.service.impl.UserServiceImpl;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -39,15 +38,6 @@ public class UserController {
                 .body(userService.findUserById(id));
     }
 
-    @GetMapping("/private/{id}")
-    public ResponseEntity<User> getPrivateUser(@PathVariable("id") Long id) {
-        log.info("Called getPrivate(): id={}", id);
-
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(userService.findUserById(id));
-    }
-
     @GetMapping("/check-existing/{id}")
     public ResponseEntity<Boolean> checkUserExisting(@PathVariable("id") Long id) {
         log.info("Called checkUserExisting(): id={}", id);
@@ -64,7 +54,8 @@ public class UserController {
                 .body(userService.findAllUsers());
     }
 
-    @PostMapping("/registration")
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping
     public ResponseEntity<User> createUser(@RequestBody @Valid User userToCreate) {
         log.info("Called createUser()");
 
@@ -97,17 +88,12 @@ public class UserController {
                 .build();
     }
 
-    @GetMapping("/email/{email}")
-    public User getUserByEmail(@PathVariable String email) throws ChangeSetPersister.NotFoundException {
-        return userService.getUserByEmail(email);
-    }
-
     @PutMapping("/{id}")
     public ResponseEntity<User> updateUser(
             @PathVariable("id") Long id,
             @RequestBody User userToUpdate,
             Authentication auth
-    ) throws ChangeSetPersister.NotFoundException {
+    ) {
         boolean isAdmin = auth.getAuthorities().stream()
                         .anyMatch(a -> "ROLE_ADMIN".equals(a.getAuthority()));
 
@@ -116,7 +102,7 @@ public class UserController {
             User currentUser = userService.getUserByEmail(currentEmail);
 
             if(!id.equals(currentUser.getId())){
-                throw new AccessDeniedException("You can update only your ouwn profile!");
+                throw new AccessDeniedException("You can update only your own profile!");
             }
         }
 

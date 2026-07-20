@@ -1,6 +1,6 @@
 package task.kafka;
 
-import task.model.Priority;
+import task.model.TaskPriority;
 import task.model.TaskStatus;
 
 import java.time.LocalDateTime;
@@ -17,8 +17,8 @@ public record TaskEvent(
         TaskStatus oldStatus,
         TaskStatus newStatus,
 
-        Priority oldTaskPriority,
-        Priority newTaskPriority,
+        TaskPriority oldTaskPriority,
+        TaskPriority newTaskPriority,
 
         LocalDateTime timestamp,
         TaskEventType eventType

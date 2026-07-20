@@ -1,36 +1,23 @@
 package com.project.userservice.api.service.impl;
 
-import com.project.userservice.api.service.UserService;
 import com.project.userservice.repository.UserRepository;
 import com.project.userservice.repository.entity.UserEntity;
-import com.project.userservice.security.dto.JwtAuthenticationDto;
-import com.project.userservice.security.dto.RefreshTokenDto;
-import com.project.userservice.security.dto.UserCredentialsDto;
-import com.project.userservice.security.jwt.JwtService;
 import com.project.userservice.utils.UserMapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.crossstore.ChangeSetPersister;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import user.model.User;
 import user.model.UserStatus;
 
 import java.util.List;
-import java.util.Optional;
 
 @AllArgsConstructor
-@Slf4j
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl {
 
     private final UserRepository userRepository;
     private final UserMapper mapper;
-    private final JwtService jwtService;
-    private final PasswordEncoder passwordEncoder;
 
     public User findUserById(Long id) {
         var user = userRepository.findById(id)
@@ -52,7 +39,6 @@ public class UserServiceImpl implements UserService {
 
     public User createUser(User userToCreate) {
         var userEntityToSave = mapper.toEntity(userToCreate);
-        userEntityToSave.setPassword(passwordEncoder.encode(userEntityToSave.getPassword()));
 
         var savedUser = userRepository.save(userEntityToSave);
         return mapper.toDomainEntity(savedUser);
@@ -107,43 +93,8 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
-    public User getUserByEmail(String email) throws ChangeSetPersister.NotFoundException {
+    public User getUserByEmail(String email) {
         return mapper.toDomainEntity(userRepository.findByEmail(email)
-                .orElseThrow(ChangeSetPersister.NotFoundException::new));
-    }
-
-    @Override
-    public JwtAuthenticationDto signIn(UserCredentialsDto userCredentialsDto) {
-        UserEntity user = findByCredentials(userCredentialsDto);
-        return jwtService.generateAuthToken(user.getEmail(), user.getRole());
-    }
-
-    @Override
-    public JwtAuthenticationDto refreshToken(RefreshTokenDto refreshTokenDto) {
-        String refreshToken = refreshTokenDto.getRefreshToken();
-        if (refreshToken != null && jwtService.validateJwtToken(refreshToken)) {
-            UserEntity user = findByEmail(jwtService.getEmailFromToken(refreshToken));
-            return jwtService.refreshBaseToken(user.getEmail(), refreshToken, user.getRole());
-        }
-
-        throw new BadCredentialsException("Invalid refresh token");
-    }
-
-    private UserEntity findByCredentials(UserCredentialsDto userCredentialsDto) {
-        Optional<UserEntity> optionalUser = userRepository.findByEmail(userCredentialsDto.getEmail());
-        if (optionalUser.isPresent()) {
-            UserEntity userEntity = optionalUser.get();
-
-            if (passwordEncoder.matches(userCredentialsDto.getPassword(), userEntity.getPassword())) {
-                return userEntity;
-            }
-        }
-
-        throw new BadCredentialsException("Email or password not correct");
-    }
-
-    private UserEntity findByEmail(String email) {
-        return userRepository.findByEmail(email)
-                .orElseThrow(() -> new BadCredentialsException(String.format("User with email %s not found", email)));
+                .orElseThrow(() -> new EntityNotFoundException("User with email " + email + " not found")));
     }
 }

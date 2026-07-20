@@ -4,15 +4,70 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fc382bbb-f556-41da-b28b-970f2dfb0fa4" name="Changes" comment="updated readme.md with some changes">
+    <list default="true" id="fc382bbb-f556-41da-b28b-970f2dfb0fa4" name="Changes" comment="dell k8s">
       <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/k8s/postgres-configmap.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/k8s/postgres-deployment.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/k8s/postgres-service.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/k8s/task-api-deployment.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/k8s/task-api-service.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/k8s/user-api-deployment.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/k8s/user-api-service.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/task/kafka/TaskEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/task/kafka/TaskEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/task/model/Priority.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/task/model/TaskPriority.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/task/model/TaskDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/task/model/TaskDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/user/model/Role.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/user/model/Role.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/user/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/user/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/simplified-front/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simplified-front/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simplified-front/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simplified-front/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simplified-front/public/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simplified-front/public/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simplified-front/public/logo192.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simplified-front/public/logo512.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simplified-front/public/manifest.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simplified-front/public/robots.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simplified-front/src/App.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simplified-front/src/App.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simplified-front/src/App.test.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simplified-front/src/api/apiClient.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simplified-front/src/auth/AuthContext.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simplified-front/src/components/AdminRoute.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simplified-front/src/components/AppLayout.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simplified-front/src/components/AuthLayout.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simplified-front/src/components/ProtectedRoute.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simplified-front/src/index.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simplified-front/src/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simplified-front/src/logo.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simplified-front/src/pages/CreateTaskPage.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simplified-front/src/pages/DashboardPage.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simplified-front/src/pages/LoginPage.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simplified-front/src/pages/ProfilePage.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simplified-front/src/pages/RegistrationPage.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simplified-front/src/pages/StatisticsPage.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simplified-front/src/pages/admin/AdminUsersPage.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simplified-front/src/reportWebVitals.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/simplified-front/src/setupTests.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/api/service/taskapi/TaskStatisticServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/api/service/taskapi/TaskStatisticServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/api/service/userapi/UserStatisticServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/statistics-service/src/main/java/com/project/statisticsservice/api/service/userapi/UserStatisticServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task-service/src/main/java/com/project/taskservice/api/service/TaskService.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-service/src/main/java/com/project/taskservice/api/service/TaskService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task-service/src/main/java/com/project/taskservice/repository/entity/TaskEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/task-service/src/main/java/com/project/taskservice/repository/entity/TaskEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/project/userservice/api/controller/AuthController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/project/userservice/api/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/project/userservice/api/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/project/userservice/api/service/UserService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/project/userservice/api/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/project/userservice/api/service/impl/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/project/userservice/repository/entity/UserEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/project/userservice/repository/entity/UserEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/project/userservice/security/CustomUserDetails.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/project/userservice/security/CustomUserServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/project/userservice/security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/project/userservice/security/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/project/userservice/security/dto/JwtAuthenticationDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/project/userservice/security/dto/RefreshTokenDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/project/userservice/security/dto/UserCredentialsDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/project/userservice/security/jwt/JwtFilter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/project/userservice/security/jwt/JwtService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/project/userservice/utils/AdminInitializer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/resources/db/changelog/changeset/001-create-users-table.sql" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/resources/db/changelog/changeset/001-create-users-table.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/resources/db/changelog/db.changelog-master.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/resources/db/changelog/db.changelog-master.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,41 +124,41 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
-    "junie.onboarding.icon.badge.shown": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/paind/task-management/user-service",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "run.configurations.included.in.services": "true",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
-    "to.speed.mode.migration.done": "true",
-    "ts.external.directory.path": "C:\\Users\\paind\\AppData\\Roaming\\JetBrains\\IntelliJIdea2025.2\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/paind/task-management/user-service&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\paind\\AppData\\Roaming\\JetBrains\\IntelliJIdea2025.2\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "postgresql",
-      "mongo"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;,
+      &quot;mongo&quot;
     ],
-    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
-      "GitIgnore"
+    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
+      &quot;GitIgnore&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\paind\task-management\user-service" />
@@ -198,7 +253,11 @@
       <workItem from="1775549771387" duration="5179000" />
       <workItem from="1775638610558" duration="3383000" />
       <workItem from="1777706317046" duration="35000" />
-      <workItem from="1779190064719" duration="1824000" />
+      <workItem from="1779190064719" duration="4133000" />
+      <workItem from="1779710161257" duration="13152000" />
+      <workItem from="1782233603140" duration="670000" />
+      <workItem from="1784042481193" duration="603000" />
+      <workItem from="1784217553286" duration="872000" />
     </task>
     <task id="LOCAL-00001" summary="v1. notification-service.&#10;notification only for completed tasks">
       <option name="closed" value="true" />
@@ -288,7 +347,15 @@
       <option name="project" value="LOCAL" />
       <updated>1779191206571</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="dell k8s">
+      <option name="closed" value="true" />
+      <created>1779194352651</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1779194352651</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -305,17 +372,7 @@
     <MESSAGE value="statistic-service v1.0&#10;statistic for Task fist version." />
     <MESSAGE value="statistic-service v2.0&#10;statistic for User second version. Final" />
     <MESSAGE value="updated readme.md with some changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="updated readme.md with some changes" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/user-service/src/main/java/com/project/userservice/security/jwt/JwtService.java</url>
-          <line>37</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="dell k8s" />
+    <option name="LAST_COMMIT_MESSAGE" value="dell k8s" />
   </component>
 </project>

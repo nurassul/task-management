@@ -15,7 +15,7 @@ spring:
         - id: user-service
           uri: http://user-api:8080
           predicates:
-            - Path=/auth/**, /users/**
+            - Path=/users/**
 
         - id: task-service
           uri: http://task-api:8080

@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import task.kafka.TaskEvent;
 import task.kafka.TaskEventType;
-import task.model.Priority;
+import task.model.TaskPriority;
 import task.model.TaskStatus;
 
 
@@ -92,7 +92,7 @@ public class UserStatisticServiceImpl implements UserStatisticService {
         }
     }
 
-    private void applyPriorityChange(Long userId, Priority priority, int delta) {
+    private void applyPriorityChange(Long userId, TaskPriority priority, int delta) {
         if (priority == null) {
             return;
         }

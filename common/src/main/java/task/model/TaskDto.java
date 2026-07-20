@@ -12,6 +12,8 @@ public record TaskDto(
         @Null
         Long id,
 
+
+
         @NotNull
         Long creatorId,
 
@@ -25,7 +27,7 @@ public record TaskDto(
         LocalDate deadlineDate,
 
         @NotNull
-        Priority priority,
+        TaskPriority priority,
 
         LocalDateTime doneDateTime
 ) {

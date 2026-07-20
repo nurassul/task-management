@@ -1,11 +1,12 @@
 # Task Management Platform
 
-Microservice-based task management platform with JWT auth, task lifecycle, event-driven statistics, notifications, and a lightweight React UI for manual testing.
+Microservice-based task management platform with task lifecycle, event-driven statistics, notifications, and Keycloak-ready authentication.
 
 ## Highlights
 
 - Microservice architecture with a single API entry point (`api-gateway`)
-- JWT authentication and role-based access (`ROLE_USER`, `ROLE_ADMIN`)
+- Authentication is being moved to Keycloak
+- Role-based access from Keycloak (`ROLE_USER`, `ROLE_ADMIN`)
 - Task lifecycle: create, update, start, complete, delete
 - Event-driven integration via Kafka
 - Aggregated statistics service (global and per-user)
@@ -16,7 +17,7 @@ Microservice-based task management platform with JWT auth, task lifecycle, event
 
 ```mermaid
 flowchart LR
-    UI["React UI\n(simplified-front)"] --> GW["API Gateway"]
+    GW["API Gateway"]
 
     GW --> US["user-service"]
     GW --> TS["task-service"]
@@ -47,12 +48,11 @@ flowchart LR
 | Service | Responsibility | Storage / Integration |
 |---|---|---|
 | `api-gateway` | Single entry point, request routing, CORS | Spring Cloud Gateway |
-| `user-service` | Registration, JWT auth, user management | PostgreSQL (`user-db`) |
+| `user-service` | Profile management, user status, admin operations | PostgreSQL (`user-db`) |
 | `task-service` | Task CRUD + lifecycle + business rules | PostgreSQL (`task-db`), Redis, Kafka |
 | `statistics-service` | Global and per-user task analytics | PostgreSQL (`user-db`), Kafka |
 | `notification-service` | Sends notifications and stores notification logs | Kafka, MongoDB, SMTP |
 | `common` | Shared DTO/models/events | Maven module |
-| `simplified-front` | Minimal React UI for API checks | Uses gateway API |
 
 ## Tech Stack
 
@@ -63,7 +63,7 @@ flowchart LR
 - Spring Cloud Gateway
 - Spring Data JPA
 - Spring Validation
-- Spring Security + JWT
+- Spring Security
 - OpenFeign
 
 ### Data & Messaging
@@ -87,12 +87,6 @@ flowchart LR
 - Docker / Docker Compose
 - Maven (multi-module)
 
-### Frontend (test UI)
-
-- React
-- React Router
-- Tailwind
-
 ## Project Structure
 
 ```text
@@ -102,7 +96,6 @@ task-management/
 |- db-init/
 |- k8s/
 |- notification-service/
-|- simplified-front/
 |- statistics-service/
 |- task-service/
 |- user-service/
@@ -115,7 +108,6 @@ task-management/
 
 - Docker + Docker Compose
 - Optional for local run (without Docker): Java 21, Maven
-- Optional for frontend: Node.js 20+
 
 ## Configuration
 
@@ -128,13 +120,6 @@ DB_uNAME=user-db
 DB_tNAME=task-db
 GMAIL_USER=your_email@gmail.com
 GMAIL_PASSWORD=your_app_password
-```
-
-Frontend env (`simplified-front/.env`):
-
-```env
-PORT=3001
-REACT_APP_API_BASE_URL=http://localhost:8080
 ```
 
 ## Run with Docker Compose
@@ -155,18 +140,9 @@ Stop:
 docker compose down
 ```
 
-## Run Frontend
-
-```bash
-cd simplified-front
-npm install
-npm start
-```
-
 ## Main URLs
 
 - Gateway: `http://localhost:8080`
-- Frontend: `http://localhost:3001`
 - Grafana: `http://localhost:3000`
 - Prometheus: `http://localhost:9090`
 - Zipkin: `http://localhost:9411`
@@ -176,18 +152,17 @@ npm start
 
 Base URL: `http://localhost:8080`
 
-### Auth / Users
+### Users
 
-- `POST /auth/sign-in`
-- `POST /auth/refresh`
-- `POST /users/registration`
+Keycloak will issue access tokens. The gateway and services should accept `Bearer` tokens from Keycloak.
+
 - `GET /users/{id}`
 - `PUT /users/{id}`
-- `GET /users/email/{email}`
 
 Admin routes:
 
 - `GET /users`
+- `POST /users`
 - `POST /users/{id}/banUser`
 - `DELETE /users/{id}/delete`
 

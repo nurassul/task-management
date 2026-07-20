@@ -1,7 +1,7 @@
 package com.project.taskservice.repository.entity;
 
 
-import task.model.Priority;
+import task.model.TaskPriority;
 import task.model.TaskStatus;
 import jakarta.persistence.*;
 import lombok.*;
@@ -43,7 +43,7 @@ public class TaskEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "priority", nullable = false)
-    private Priority priority;
+    private TaskPriority priority;
 
     @Column(name = "done_datetime")
     private LocalDateTime doneDateTime;

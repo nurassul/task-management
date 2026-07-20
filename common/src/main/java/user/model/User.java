@@ -15,13 +15,12 @@ public class User{
         @NotNull
         String username;
 
-        @NotNull
-        String email;
+    @NotNull
+    String email;
 
-        Role role;
+    Role role;
 
-        LocalDateTime registrationDate;
-        UserStatus userStatus;
-        String password;
+    LocalDateTime registrationDate;
+    UserStatus userStatus;
 
 }

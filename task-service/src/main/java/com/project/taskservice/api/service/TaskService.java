@@ -7,14 +7,12 @@ import com.project.taskservice.utils.TaskMapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import task.kafka.TaskEvent;
 import task.kafka.TaskEventType;
-import task.model.Priority;
+import task.model.TaskPriority;
 import task.model.TaskDto;
 import task.model.TaskStatus;
 
@@ -94,7 +92,7 @@ public class TaskService {
                 .orElseThrow(() -> new NoSuchElementException("Not found task with id=" + id));
 
         TaskStatus oldStatus = existingTask.getTaskStatus();
-        Priority oldPriority = existingTask.getPriority();
+        TaskPriority oldPriority = existingTask.getPriority();
 
         if (taskDtoToUpdate.creatorId() == null) {
             throw new IllegalArgumentException("creatorId is required");
@@ -172,7 +170,7 @@ public class TaskService {
         }
 
         TaskStatus oldStatus = task.getTaskStatus();
-        Priority oldPriority = task.getPriority();
+        TaskPriority oldPriority = task.getPriority();
         task.setTaskStatus(TaskStatus.IN_PROGRESS);
         var savedTask = taskRepository.save(task);
 
@@ -200,7 +198,7 @@ public class TaskService {
         validateUserExists(task.getAssignedUserId());
 
         TaskStatus oldStatus = task.getTaskStatus();
-        Priority oldPriority = task.getPriority();
+        TaskPriority oldPriority = task.getPriority();
         task.setTaskStatus(TaskStatus.DONE);
         task.setDoneDateTime(LocalDateTime.now());
 
@@ -225,7 +223,7 @@ public class TaskService {
         kafkaTemplate.send("task-events", task.getId(), event);
     }
 
-    private void sendTaskEvent(TaskEntity task, TaskStatus oldStatus, Priority oldPriority, TaskEventType eventType) {
+    private void sendTaskEvent(TaskEntity task, TaskStatus oldStatus, TaskPriority oldPriority, TaskEventType eventType) {
         var event = new TaskEvent(
                 task.getId(),
                 task.getCreatorId(),
